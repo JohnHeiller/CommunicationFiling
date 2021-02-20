@@ -37,10 +37,10 @@ namespace CommunicationFiling
             #endregion
 
             #region BDConnection
-            //var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            var connectionString = Configuration.GetConnectionString("DBConnection");
             services.AddDbContext<CommFilingContext>(config =>
             {
-                config.UseInMemoryDatabase("CommFilingDB");//.UseSqlServer("DBConnection");
+                config.UseSqlServer(connectionString);//UseInMemoryDatabase("CommFilingDB");
             });
             #endregion
 

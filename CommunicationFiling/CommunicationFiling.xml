@@ -60,7 +60,7 @@
             <param name="audit">DTO del registro de auditoria</param>
             <returns>ID del registro</returns>
         </member>
-        <member name="M:CommunicationFiling.Controllers.AuditController.Update(CommunicationFiling.DAL.Entities.Audit)">
+        <member name="M:CommunicationFiling.Controllers.AuditController.Update(CommunicationFiling.DTO.AuditDTO)">
             <summary>
             Actualiza registro de auditoria por DTO
             </summary>
@@ -92,21 +92,21 @@
             <summary>
             Crea o inserta registro de tipo de correspondencia
             </summary>
-            <param name="audit">DTO del registro de tipo de correspondencia</param>
+            <param name="correspondenceType">DTO del registro de tipo de correspondencia</param>
             <returns>ID del registro</returns>
         </member>
-        <member name="M:CommunicationFiling.Controllers.CorrespondenceTypeController.Update(CommunicationFiling.DAL.Entities.CorrespondenceType)">
+        <member name="M:CommunicationFiling.Controllers.CorrespondenceTypeController.Update(CommunicationFiling.DTO.CorrespondenceTypeDTO)">
             <summary>
             Actualiza registro de tipo de correspondencia por DTO
             </summary>
-            <param name="audit">DTO del registro de tipo de correspondencia a actualizar</param>
+            <param name="correspondenceType">DTO del registro de tipo de correspondencia a actualizar</param>
             <returns>ID del registro actualizado</returns>
         </member>
         <member name="M:CommunicationFiling.Controllers.CorrespondenceTypeController.Delete(CommunicationFiling.DTO.CorrespondenceTypeDTO)">
             <summary>
             Elimina registro de tipo de correspondencia por DTO
             </summary>
-            <param name="audit">DTO con registro de tipo de correspondencia a eliminar</param>
+            <param name="correspondenceType">DTO con registro de tipo de correspondencia a eliminar</param>
             <returns>Validacion exitosa de eliminacion</returns>
         </member>
         <member name="M:CommunicationFiling.Controllers.CorrespondenceTypeController.Delete(System.Int64)">
@@ -151,7 +151,7 @@
             <param name="filing">DTO de registro de radicado</param>
             <returns>ID del registro de radicado creado</returns>
         </member>
-        <member name="M:CommunicationFiling.Controllers.FilingController.Update(CommunicationFiling.DAL.Entities.Filing)">
+        <member name="M:CommunicationFiling.Controllers.FilingController.Update(CommunicationFiling.DTO.FilingDTO)">
             <summary>
             Actualiza registro de radicado por DTO
             </summary>
@@ -183,21 +183,21 @@
             <summary>
             Crea o inserta registro de relacion Rol y Accion
             </summary>
-            <param name="audit">DTO del registro de relacion Rol y Accion</param>
+            <param name="roleAction">DTO del registro de relacion Rol y Accion</param>
             <returns>ID del registro</returns>
         </member>
-        <member name="M:CommunicationFiling.Controllers.RoleActionController.Update(CommunicationFiling.DAL.Entities.RoleAction)">
+        <member name="M:CommunicationFiling.Controllers.RoleActionController.Update(CommunicationFiling.DTO.RoleActionDTO)">
             <summary>
             Actualiza registro de relacion Rol y Accion por DTO
             </summary>
-            <param name="audit">DTO del registro de relacion Rol y Accion a actualizar</param>
+            <param name="roleAction">DTO del registro de relacion Rol y Accion a actualizar</param>
             <returns>ID del registro actualizado</returns>
         </member>
         <member name="M:CommunicationFiling.Controllers.RoleActionController.Delete(CommunicationFiling.DTO.RoleActionDTO)">
             <summary>
             Elimina registro de relacion Rol y Accion por DTO
             </summary>
-            <param name="audit">DTO con registro de relacion Rol y Accion a eliminar</param>
+            <param name="roleAction">DTO con registro de relacion Rol y Accion a eliminar</param>
             <returns>Validacion exitosa de eliminacion</returns>
         </member>
         <member name="M:CommunicationFiling.Controllers.RoleActionController.Delete(System.Int64)">
@@ -212,27 +212,27 @@
             Obtiene datos de registro del rol por ID
             </summary>
             <param name="id">ID del registro</param>
-            <returns>DTO del registro de auditoria</returns>
+            <returns>DTO del registro de roleoria</returns>
         </member>
         <member name="M:CommunicationFiling.Controllers.RoleController.Create(CommunicationFiling.DTO.RoleDTO)">
             <summary>
             Crea o inserta registro del rol
             </summary>
-            <param name="audit">DTO del registro de rol</param>
+            <param name="role">DTO del registro de rol</param>
             <returns>ID del registro</returns>
         </member>
-        <member name="M:CommunicationFiling.Controllers.RoleController.Update(CommunicationFiling.DAL.Entities.Role)">
+        <member name="M:CommunicationFiling.Controllers.RoleController.Update(CommunicationFiling.DTO.RoleDTO)">
             <summary>
             Actualiza registro de rol por DTO
             </summary>
-            <param name="audit">DTO del registro de rol a actualizar</param>
+            <param name="role">DTO del registro de rol a actualizar</param>
             <returns>ID del registro actualizado</returns>
         </member>
         <member name="M:CommunicationFiling.Controllers.RoleController.Delete(CommunicationFiling.DTO.RoleDTO)">
             <summary>
             Elimina registro de rol por DTO
             </summary>
-            <param name="audit">DTO con registro de rol a eliminar</param>
+            <param name="role">DTO con registro de rol a eliminar</param>
             <returns>Validacion exitosa de eliminacion</returns>
         </member>
         <member name="M:CommunicationFiling.Controllers.RoleController.Delete(System.Int64)">
@@ -253,21 +253,21 @@
             <summary>
             Crea o inserta registro de usuario
             </summary>
-            <param name="audit">DTO del registro de usuario</param>
+            <param name="user">DTO del registro de usuario</param>
             <returns>ID del registro</returns>
         </member>
-        <member name="M:CommunicationFiling.Controllers.UserController.Update(CommunicationFiling.DAL.Entities.User)">
+        <member name="M:CommunicationFiling.Controllers.UserController.Update(CommunicationFiling.DTO.UserDTO)">
             <summary>
             Actualiza registro de usuario por DTO
             </summary>
-            <param name="audit">DTO del registro de usuario a actualizar</param>
+            <param name="user">DTO del registro de usuario a actualizar</param>
             <returns>ID del registro actualizado</returns>
         </member>
         <member name="M:CommunicationFiling.Controllers.UserController.Delete(CommunicationFiling.DTO.UserDTO)">
             <summary>
             Elimina registro de usuario por DTO
             </summary>
-            <param name="audit">DTO con registro de usuario a eliminar</param>
+            <param name="user">DTO con registro de usuario a eliminar</param>
             <returns>Validacion exitosa de eliminacion</returns>
         </member>
         <member name="M:CommunicationFiling.Controllers.UserController.Delete(System.Int64)">
@@ -288,21 +288,21 @@
             <summary>
             Crea o inserta registro de relacion Usuario y Rol
             </summary>
-            <param name="audit">DTO del registro de relacion Usuario y Rol</param>
+            <param name="userRole">DTO del registro de relacion Usuario y Rol</param>
             <returns>ID del registro</returns>
         </member>
-        <member name="M:CommunicationFiling.Controllers.UserRoleController.Update(CommunicationFiling.DAL.Entities.UserRole)">
+        <member name="M:CommunicationFiling.Controllers.UserRoleController.Update(CommunicationFiling.DTO.UserRoleDTO)">
             <summary>
             Actualiza registro de relacion Usuario y Rol por DTO
             </summary>
-            <param name="audit">DTO del registro de relacion Usuario y Rol a actualizar</param>
+            <param name="userRole">DTO del registro de relacion Usuario y Rol a actualizar</param>
             <returns>ID del registro actualizado</returns>
         </member>
         <member name="M:CommunicationFiling.Controllers.UserRoleController.Delete(CommunicationFiling.DTO.UserRoleDTO)">
             <summary>
             Elimina registro de relacion Usuario y Rol por DTO
             </summary>
-            <param name="audit">DTO con registro de relacion Usuario y Rol a eliminar</param>
+            <param name="userRole">DTO con registro de relacion Usuario y Rol a eliminar</param>
             <returns>Validacion exitosa de eliminacion</returns>
         </member>
         <member name="M:CommunicationFiling.Controllers.UserRoleController.Delete(System.Int64)">
