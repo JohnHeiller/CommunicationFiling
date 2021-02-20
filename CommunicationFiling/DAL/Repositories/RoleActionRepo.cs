@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace CommunicationRoleAction.DAL.Repositories
+namespace CommunicationFiling.DAL.Repositories
 {
     public class RoleActionRepo : IRoleActionRepo
     {

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace CommunicationUser.DAL.Repositories
+namespace CommunicationFiling.DAL.Repositories
 {
     public class UserRepo : IUserRepo
     {

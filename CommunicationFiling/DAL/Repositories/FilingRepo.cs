@@ -63,6 +63,10 @@ namespace CommunicationFiling.DAL.Repositories
 
         public long Create(Filing entity)
         {
+            if (entity.CorrespondenceTypeId > 0)
+            {
+                entity.Consecutive = GenerateConsecutive(entity.CorrespondenceTypeId);
+            }
             _context.Filings.Add(entity);
             _context.SaveChanges();
             return entity.Id;
@@ -87,6 +91,32 @@ namespace CommunicationFiling.DAL.Repositories
         {
             _context.Entry(entity).State = EntityState.Modified;
             _context.SaveChanges();
+        }
+
+        private string GenerateConsecutive(long correspTypeId)
+        {
+            long countFilings = 0;
+            string tmpConsecutive = "";
+            bool isNewConsecutive = false;
+            var correspType = _context.CorrespondenceTypes.AsNoTracking()
+                                .FirstOrDefault(x => x.Id == correspTypeId);
+            countFilings = _context.Filings.Where(x => x.CorrespondenceTypeId == correspTypeId)
+                            .AsNoTracking().Count();
+            while (isNewConsecutive == false)
+            {
+                tmpConsecutive = correspType.Code.Trim() + string.Format("{0, 0:D8}", (countFilings + 1));
+                var existConsecutive = _context.Filings.AsNoTracking()
+                                        .FirstOrDefault(x => x.Consecutive.Equals(tmpConsecutive));
+                if (existConsecutive == null || existConsecutive.Id == 0)
+                {
+                    isNewConsecutive = true;
+                }
+                else
+                {
+                    countFilings += 1;
+                }
+            }
+            return tmpConsecutive;
         }
     }
 }

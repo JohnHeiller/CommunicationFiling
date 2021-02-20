@@ -12,7 +12,7 @@ namespace CommunicationFiling.DAL.Repositories
 {
     public class ActionRepo : IActionRepo
     {
-        readonly CommFilingContext _context;
+        protected CommFilingContext _context;
 
         public ActionRepo(CommFilingContext context)
         {
