@@ -24,11 +24,11 @@ namespace CommunicationFiling.Controllers
         private readonly ICorrespondenceTypeRepo CorrespondenceTypeRepo;
 
         public CorrespondenceTypeController(IConfiguration configuration, IMapper mapper,
-            ICorrespondenceTypeRepo auditRepo, ILogger<CorrespondenceTypeController> logger) : base(logger)
+            ICorrespondenceTypeRepo correspondenceTypeRepo, ILogger<CorrespondenceTypeController> logger) : base(logger)
         {
             Configuration = configuration;
             Mapper = mapper;
-            CorrespondenceTypeRepo = auditRepo;
+            CorrespondenceTypeRepo = correspondenceTypeRepo;
         }
 
         /// <summary>
@@ -69,17 +69,17 @@ namespace CommunicationFiling.Controllers
         /// <summary>
         /// Crea o inserta registro de tipo de correspondencia
         /// </summary>
-        /// <param name="audit">DTO del registro de tipo de correspondencia</param>
+        /// <param name="correspondenceType">DTO del registro de tipo de correspondencia</param>
         /// <returns>ID del registro</returns>
         [HttpPost]
         [Route("Create")]
         [Produces("application/json")]
-        public ActionResult Create(CorrespondenceTypeDTO audit)
+        public ActionResult Create(CorrespondenceTypeDTO correspondenceType)
         {
             MethodBase method = MethodBase.GetCurrentMethod();
             try
             {
-                CorrespondenceType newCorrespondenceType = Mapper.Map<CorrespondenceType>(audit);
+                CorrespondenceType newCorrespondenceType = Mapper.Map<CorrespondenceType>(correspondenceType);
                 newCorrespondenceType.IsValid = true;
                 newCorrespondenceType.Id = 0;
                 var response = CorrespondenceTypeRepo.Create(newCorrespondenceType);
@@ -103,19 +103,19 @@ namespace CommunicationFiling.Controllers
         /// <summary>
         /// Actualiza registro de tipo de correspondencia por DTO
         /// </summary>
-        /// <param name="audit">DTO del registro de tipo de correspondencia a actualizar</param>
+        /// <param name="correspondenceType">DTO del registro de tipo de correspondencia a actualizar</param>
         /// <returns>ID del registro actualizado</returns>
         [HttpPut]
         [Route("Update")]
         [Produces("application/json")]
-        public ActionResult Update(CorrespondenceType audit)
+        public ActionResult Update(CorrespondenceTypeDTO correspondenceType)
         {
             MethodBase method = MethodBase.GetCurrentMethod();
             try
             {
-                if (audit.Id > 0)
+                if (correspondenceType.Id > 0)
                 {
-                    CorrespondenceType upCorrespondenceType = Mapper.Map<CorrespondenceType>(audit);
+                    CorrespondenceType upCorrespondenceType = Mapper.Map<CorrespondenceType>(correspondenceType);
                     CorrespondenceTypeRepo.Update(upCorrespondenceType);
                     CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
                     return Ok(upCorrespondenceType.Id);
@@ -135,19 +135,19 @@ namespace CommunicationFiling.Controllers
         /// <summary>
         /// Elimina registro de tipo de correspondencia por DTO
         /// </summary>
-        /// <param name="audit">DTO con registro de tipo de correspondencia a eliminar</param>
+        /// <param name="correspondenceType">DTO con registro de tipo de correspondencia a eliminar</param>
         /// <returns>Validacion exitosa de eliminacion</returns>
         [HttpPost]
         [Route("Delete")]
         [Produces("application/json")]
-        public ActionResult Delete(CorrespondenceTypeDTO audit)
+        public ActionResult Delete(CorrespondenceTypeDTO correspondenceType)
         {
             MethodBase method = MethodBase.GetCurrentMethod();
             try
             {
-                if (audit.Id > 0)
+                if (correspondenceType.Id > 0)
                 {
-                    CorrespondenceType delCorrespondenceType = Mapper.Map<CorrespondenceType>(audit);
+                    CorrespondenceType delCorrespondenceType = Mapper.Map<CorrespondenceType>(correspondenceType);
                     CorrespondenceTypeRepo.Delete(delCorrespondenceType);
                     CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
                     return Ok(true);

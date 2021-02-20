@@ -24,11 +24,11 @@ namespace CommunicationFiling.Controllers
         private readonly IUserRepo UserRepo;
 
         public UserController(IConfiguration configuration, IMapper mapper,
-            IUserRepo auditRepo, ILogger<UserController> logger) : base(logger)
+            IUserRepo userRepo, ILogger<UserController> logger) : base(logger)
         {
             Configuration = configuration;
             Mapper = mapper;
-            UserRepo = auditRepo;
+            UserRepo = userRepo;
         }
 
         /// <summary>
@@ -69,17 +69,17 @@ namespace CommunicationFiling.Controllers
         /// <summary>
         /// Crea o inserta registro de usuario
         /// </summary>
-        /// <param name="audit">DTO del registro de usuario</param>
+        /// <param name="user">DTO del registro de usuario</param>
         /// <returns>ID del registro</returns>
         [HttpPost]
         [Route("Create")]
         [Produces("application/json")]
-        public ActionResult Create(UserDTO audit)
+        public ActionResult Create(UserDTO user)
         {
             MethodBase method = MethodBase.GetCurrentMethod();
             try
             {
-                User newUser = Mapper.Map<User>(audit);
+                User newUser = Mapper.Map<User>(user);
                 newUser.IsValid = true;
                 newUser.Id = 0;
                 var response = UserRepo.Create(newUser);
@@ -103,19 +103,19 @@ namespace CommunicationFiling.Controllers
         /// <summary>
         /// Actualiza registro de usuario por DTO
         /// </summary>
-        /// <param name="audit">DTO del registro de usuario a actualizar</param>
+        /// <param name="user">DTO del registro de usuario a actualizar</param>
         /// <returns>ID del registro actualizado</returns>
         [HttpPut]
         [Route("Update")]
         [Produces("application/json")]
-        public ActionResult Update(User audit)
+        public ActionResult Update(UserDTO user)
         {
             MethodBase method = MethodBase.GetCurrentMethod();
             try
             {
-                if (audit.Id > 0)
+                if (user.Id > 0)
                 {
-                    User upUser = Mapper.Map<User>(audit);
+                    User upUser = Mapper.Map<User>(user);
                     UserRepo.Update(upUser);
                     CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
                     return Ok(upUser.Id);
@@ -135,19 +135,19 @@ namespace CommunicationFiling.Controllers
         /// <summary>
         /// Elimina registro de usuario por DTO
         /// </summary>
-        /// <param name="audit">DTO con registro de usuario a eliminar</param>
+        /// <param name="user">DTO con registro de usuario a eliminar</param>
         /// <returns>Validacion exitosa de eliminacion</returns>
         [HttpPost]
         [Route("Delete")]
         [Produces("application/json")]
-        public ActionResult Delete(UserDTO audit)
+        public ActionResult Delete(UserDTO user)
         {
             MethodBase method = MethodBase.GetCurrentMethod();
             try
             {
-                if (audit.Id > 0)
+                if (user.Id > 0)
                 {
-                    User delUser = Mapper.Map<User>(audit);
+                    User delUser = Mapper.Map<User>(user);
                     UserRepo.Delete(delUser);
                     CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
                     return Ok(true);

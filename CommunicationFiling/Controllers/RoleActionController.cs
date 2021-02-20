@@ -24,11 +24,11 @@ namespace CommunicationFiling.Controllers
         private readonly IRoleActionRepo RoleActionRepo;
 
         public RoleActionController(IConfiguration configuration, IMapper mapper,
-            IRoleActionRepo auditRepo, ILogger<RoleActionController> logger) : base(logger)
+            IRoleActionRepo roleActionRepo, ILogger<RoleActionController> logger) : base(logger)
         {
             Configuration = configuration;
             Mapper = mapper;
-            RoleActionRepo = auditRepo;
+            RoleActionRepo = roleActionRepo;
         }
 
         /// <summary>
@@ -69,17 +69,17 @@ namespace CommunicationFiling.Controllers
         /// <summary>
         /// Crea o inserta registro de relacion Rol y Accion
         /// </summary>
-        /// <param name="audit">DTO del registro de relacion Rol y Accion</param>
+        /// <param name="roleAction">DTO del registro de relacion Rol y Accion</param>
         /// <returns>ID del registro</returns>
         [HttpPost]
         [Route("Create")]
         [Produces("application/json")]
-        public ActionResult Create(RoleActionDTO audit)
+        public ActionResult Create(RoleActionDTO roleAction)
         {
             MethodBase method = MethodBase.GetCurrentMethod();
             try
             {
-                RoleAction newRoleAction = Mapper.Map<RoleAction>(audit);
+                RoleAction newRoleAction = Mapper.Map<RoleAction>(roleAction);
                 newRoleAction.IsValid = true;
                 newRoleAction.Id = 0;
                 var response = RoleActionRepo.Create(newRoleAction);
@@ -103,19 +103,19 @@ namespace CommunicationFiling.Controllers
         /// <summary>
         /// Actualiza registro de relacion Rol y Accion por DTO
         /// </summary>
-        /// <param name="audit">DTO del registro de relacion Rol y Accion a actualizar</param>
+        /// <param name="roleAction">DTO del registro de relacion Rol y Accion a actualizar</param>
         /// <returns>ID del registro actualizado</returns>
         [HttpPut]
         [Route("Update")]
         [Produces("application/json")]
-        public ActionResult Update(RoleAction audit)
+        public ActionResult Update(RoleActionDTO roleAction)
         {
             MethodBase method = MethodBase.GetCurrentMethod();
             try
             {
-                if (audit.Id > 0)
+                if (roleAction.Id > 0)
                 {
-                    RoleAction upRoleAction = Mapper.Map<RoleAction>(audit);
+                    RoleAction upRoleAction = Mapper.Map<RoleAction>(roleAction);
                     RoleActionRepo.Update(upRoleAction);
                     CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
                     return Ok(upRoleAction.Id);
@@ -135,19 +135,19 @@ namespace CommunicationFiling.Controllers
         /// <summary>
         /// Elimina registro de relacion Rol y Accion por DTO
         /// </summary>
-        /// <param name="audit">DTO con registro de relacion Rol y Accion a eliminar</param>
+        /// <param name="roleAction">DTO con registro de relacion Rol y Accion a eliminar</param>
         /// <returns>Validacion exitosa de eliminacion</returns>
         [HttpPost]
         [Route("Delete")]
         [Produces("application/json")]
-        public ActionResult Delete(RoleActionDTO audit)
+        public ActionResult Delete(RoleActionDTO roleAction)
         {
             MethodBase method = MethodBase.GetCurrentMethod();
             try
             {
-                if (audit.Id > 0)
+                if (roleAction.Id > 0)
                 {
-                    RoleAction delRoleAction = Mapper.Map<RoleAction>(audit);
+                    RoleAction delRoleAction = Mapper.Map<RoleAction>(roleAction);
                     RoleActionRepo.Delete(delRoleAction);
                     CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
                     return Ok(true);

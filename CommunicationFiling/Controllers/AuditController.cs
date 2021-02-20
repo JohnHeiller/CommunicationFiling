@@ -108,7 +108,7 @@ namespace CommunicationFiling.Controllers
         [HttpPut]
         [Route("Update")]
         [Produces("application/json")]
-        public ActionResult Update(Audit audit)
+        public ActionResult Update(AuditDTO audit)
         {
             MethodBase method = MethodBase.GetCurrentMethod();
             try

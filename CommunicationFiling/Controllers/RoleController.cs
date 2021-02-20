@@ -24,18 +24,18 @@ namespace CommunicationFiling.Controllers
         private readonly IRoleRepo RoleRepo;
 
         public RoleController(IConfiguration configuration, IMapper mapper,
-            IRoleRepo auditRepo, ILogger<RoleController> logger) : base(logger)
+            IRoleRepo roleRepo, ILogger<RoleController> logger) : base(logger)
         {
             Configuration = configuration;
             Mapper = mapper;
-            RoleRepo = auditRepo;
+            RoleRepo = roleRepo;
         }
 
         /// <summary>
         /// Obtiene datos de registro del rol por ID
         /// </summary>
         /// <param name="id">ID del registro</param>
-        /// <returns>DTO del registro de auditoria</returns>
+        /// <returns>DTO del registro de roleoria</returns>
         [HttpGet]
         [Route("Get/{id}")]
         public ActionResult Get(long id)
@@ -69,17 +69,17 @@ namespace CommunicationFiling.Controllers
         /// <summary>
         /// Crea o inserta registro del rol
         /// </summary>
-        /// <param name="audit">DTO del registro de rol</param>
+        /// <param name="role">DTO del registro de rol</param>
         /// <returns>ID del registro</returns>
         [HttpPost]
         [Route("Create")]
         [Produces("application/json")]
-        public ActionResult Create(RoleDTO audit)
+        public ActionResult Create(RoleDTO role)
         {
             MethodBase method = MethodBase.GetCurrentMethod();
             try
             {
-                Role newRole = Mapper.Map<Role>(audit);
+                Role newRole = Mapper.Map<Role>(role);
                 newRole.IsValid = true;
                 newRole.Id = 0;
                 var response = RoleRepo.Create(newRole);
@@ -103,19 +103,19 @@ namespace CommunicationFiling.Controllers
         /// <summary>
         /// Actualiza registro de rol por DTO
         /// </summary>
-        /// <param name="audit">DTO del registro de rol a actualizar</param>
+        /// <param name="role">DTO del registro de rol a actualizar</param>
         /// <returns>ID del registro actualizado</returns>
         [HttpPut]
         [Route("Update")]
         [Produces("application/json")]
-        public ActionResult Update(Role audit)
+        public ActionResult Update(RoleDTO role)
         {
             MethodBase method = MethodBase.GetCurrentMethod();
             try
             {
-                if (audit.Id > 0)
+                if (role.Id > 0)
                 {
-                    Role upRole = Mapper.Map<Role>(audit);
+                    Role upRole = Mapper.Map<Role>(role);
                     RoleRepo.Update(upRole);
                     CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
                     return Ok(upRole.Id);
@@ -135,19 +135,19 @@ namespace CommunicationFiling.Controllers
         /// <summary>
         /// Elimina registro de rol por DTO
         /// </summary>
-        /// <param name="audit">DTO con registro de rol a eliminar</param>
+        /// <param name="role">DTO con registro de rol a eliminar</param>
         /// <returns>Validacion exitosa de eliminacion</returns>
         [HttpPost]
         [Route("Delete")]
         [Produces("application/json")]
-        public ActionResult Delete(RoleDTO audit)
+        public ActionResult Delete(RoleDTO role)
         {
             MethodBase method = MethodBase.GetCurrentMethod();
             try
             {
-                if (audit.Id > 0)
+                if (role.Id > 0)
                 {
-                    Role delRole = Mapper.Map<Role>(audit);
+                    Role delRole = Mapper.Map<Role>(role);
                     RoleRepo.Delete(delRole);
                     CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
                     return Ok(true);

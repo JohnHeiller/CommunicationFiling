@@ -24,11 +24,11 @@ namespace CommunicationFiling.Controllers
         private readonly IUserRoleRepo UserRoleRepo;
 
         public UserRoleController(IConfiguration configuration, IMapper mapper,
-            IUserRoleRepo auditRepo, ILogger<UserRoleController> logger) : base(logger)
+            IUserRoleRepo userRoleRepo, ILogger<UserRoleController> logger) : base(logger)
         {
             Configuration = configuration;
             Mapper = mapper;
-            UserRoleRepo = auditRepo;
+            UserRoleRepo = userRoleRepo;
         }
 
         /// <summary>
@@ -69,17 +69,17 @@ namespace CommunicationFiling.Controllers
         /// <summary>
         /// Crea o inserta registro de relacion Usuario y Rol
         /// </summary>
-        /// <param name="audit">DTO del registro de relacion Usuario y Rol</param>
+        /// <param name="userRole">DTO del registro de relacion Usuario y Rol</param>
         /// <returns>ID del registro</returns>
         [HttpPost]
         [Route("Create")]
         [Produces("application/json")]
-        public ActionResult Create(UserRoleDTO audit)
+        public ActionResult Create(UserRoleDTO userRole)
         {
             MethodBase method = MethodBase.GetCurrentMethod();
             try
             {
-                UserRole newUserRole = Mapper.Map<UserRole>(audit);
+                UserRole newUserRole = Mapper.Map<UserRole>(userRole);
                 newUserRole.IsValid = true;
                 newUserRole.Id = 0;
                 var response = UserRoleRepo.Create(newUserRole);
@@ -103,19 +103,19 @@ namespace CommunicationFiling.Controllers
         /// <summary>
         /// Actualiza registro de relacion Usuario y Rol por DTO
         /// </summary>
-        /// <param name="audit">DTO del registro de relacion Usuario y Rol a actualizar</param>
+        /// <param name="userRole">DTO del registro de relacion Usuario y Rol a actualizar</param>
         /// <returns>ID del registro actualizado</returns>
         [HttpPut]
         [Route("Update")]
         [Produces("application/json")]
-        public ActionResult Update(UserRole audit)
+        public ActionResult Update(UserRoleDTO userRole)
         {
             MethodBase method = MethodBase.GetCurrentMethod();
             try
             {
-                if (audit.Id > 0)
+                if (userRole.Id > 0)
                 {
-                    UserRole upUserRole = Mapper.Map<UserRole>(audit);
+                    UserRole upUserRole = Mapper.Map<UserRole>(userRole);
                     UserRoleRepo.Update(upUserRole);
                     CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
                     return Ok(upUserRole.Id);
@@ -135,19 +135,19 @@ namespace CommunicationFiling.Controllers
         /// <summary>
         /// Elimina registro de relacion Usuario y Rol por DTO
         /// </summary>
-        /// <param name="audit">DTO con registro de relacion Usuario y Rol a eliminar</param>
+        /// <param name="userRole">DTO con registro de relacion Usuario y Rol a eliminar</param>
         /// <returns>Validacion exitosa de eliminacion</returns>
         [HttpPost]
         [Route("Delete")]
         [Produces("application/json")]
-        public ActionResult Delete(UserRoleDTO audit)
+        public ActionResult Delete(UserRoleDTO userRole)
         {
             MethodBase method = MethodBase.GetCurrentMethod();
             try
             {
-                if (audit.Id > 0)
+                if (userRole.Id > 0)
                 {
-                    UserRole delUserRole = Mapper.Map<UserRole>(audit);
+                    UserRole delUserRole = Mapper.Map<UserRole>(userRole);
                     UserRoleRepo.Delete(delUserRole);
                     CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
                     return Ok(true);

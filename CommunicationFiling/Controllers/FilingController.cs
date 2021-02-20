@@ -204,7 +204,7 @@ namespace CommunicationFiling.Controllers
         [HttpPut]
         [Route("Update")]
         [Produces("application/json")]
-        public ActionResult Update(Filing filing)
+        public ActionResult Update(FilingDTO filing)
         {
             MethodBase method = MethodBase.GetCurrentMethod();
             try
