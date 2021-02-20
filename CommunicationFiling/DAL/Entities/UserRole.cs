@@ -17,7 +17,7 @@ namespace CommunicationFiling.DAL.Entities
         [ForeignKey("Role")]
         public long RoleId { get; set; }
         [ForeignKey("Audit")]
-        public long? AuditId { get; set; }
+        public long AuditId { get; set; }
         public bool IsValid { get; set; }
         public User User { get; set; }
         public Role Role { get; set; }

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CommunicationFiling.DAL.Entities
 {
@@ -25,7 +21,7 @@ namespace CommunicationFiling.DAL.Entities
         [ForeignKey("CorrespondenceType")]
         public long CorrespondenceTypeId { get; set; }
         [ForeignKey("Audit")]
-        public long? AuditId { get; set; }
+        public long AuditId { get; set; }
         public bool IsValid { get; set; }
         public User SenderUser { get; set; }
         public User AddresseeUser { get; set; }

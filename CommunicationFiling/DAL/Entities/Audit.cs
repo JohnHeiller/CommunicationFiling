@@ -13,13 +13,13 @@ namespace CommunicationFiling.DAL.Entities
         [Key]
         public long Id { get; set; }
         public DateTime CreationDate { get; set; }
-        [ForeignKey("CreationUserRole")]
-        public long CreationUserRoleId { get; set; }
+        [ForeignKey("CreationUser")]
+        public long CreationUserId { get; set; }
         public DateTime? ModificationDate { get; set; }
-        [ForeignKey("ModificationUserRole")]
-        public long? ModificationUserRoleId { get; set; }
+        [ForeignKey("ModificationUser")]
+        public long? ModificationUserId { get; set; }
         public bool IsValid { get; set; }
-        public UserRole CreationUserRole { get; set; }
-        public UserRole ModificationUserRole { get; set; }
+        public User CreationUser { get; set; }
+        public User ModificationUser { get; set; }
     }
 }
