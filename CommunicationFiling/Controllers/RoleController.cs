@@ -14,7 +14,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace CommunicationFiling.Controllers
 {
     [SwaggerTag("Roles API - Acciones del controlador para gestion de datos de la tabla Roles")]
-    [Authorize(Roles = "Administrador")]
+    //[Authorize(Roles = "Administrador")]
     [ApiController]
     [Route("[controller]")]
     public class RoleController : BaseController<RoleController>

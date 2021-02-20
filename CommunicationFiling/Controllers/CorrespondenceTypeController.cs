@@ -14,7 +14,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace CommunicationFiling.Controllers
 {
     [SwaggerTag("CorrespondenceTypes API - Acciones del controlador para gestion de datos de la tabla Tipos de correspondencia")]
-    [Authorize(Roles = "Administrador")]
+    //[Authorize(Roles = "Administrador")]
     [ApiController]
     [Route("[controller]")]
     public class CorrespondenceTypeController : BaseController<CorrespondenceTypeController>

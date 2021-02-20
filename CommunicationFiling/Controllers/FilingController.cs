@@ -14,7 +14,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace CommunicationFiling.Controllers
 {
     [SwaggerTag("Filings API - Acciones del controlador para gestion de datos de la tabla Radicados")]
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("[controller]")]
     public class FilingController : BaseController<FilingController>
@@ -36,7 +36,7 @@ namespace CommunicationFiling.Controllers
         /// </summary>
         /// <param name="id">ID del registro de radicado</param>
         /// <returns>DTO con datos de registro de radicado</returns>
-        [Authorize(Roles = "Administrador, Gestor, Destinatario")]
+        //[Authorize(Roles = "Administrador, Gestor, Destinatario")]
         [HttpGet]
         [Route("Get/{id}")]
         public ActionResult Get(long id)
@@ -72,7 +72,7 @@ namespace CommunicationFiling.Controllers
         /// </summary>
         /// <param name="consecutive">Consecutivo del radicado</param>
         /// <returns>DTO del registro de radicado</returns>
-        [Authorize(Roles = "Administrador, Gestor, Destinatario")]
+        //[Authorize(Roles = "Administrador, Gestor, Destinatario")]
         [HttpGet]
         [Route("GetByConsecutive/{consecutive}")]
         public ActionResult GetByConsecutive(string consecutive)
@@ -103,7 +103,7 @@ namespace CommunicationFiling.Controllers
         /// </summary>
         /// <param name="userId">ID de usuario del destinatario</param>
         /// <returns>DTO del registro de radicado</returns>
-        [Authorize(Roles = "Administrador, Gestor, Destinatario")]
+        //[Authorize(Roles = "Administrador, Gestor, Destinatario")]
         [HttpGet]
         [Route("GetByAddresseeUser/{userId}")]
         public ActionResult GetByAddresseeUser(long userId)
@@ -134,7 +134,7 @@ namespace CommunicationFiling.Controllers
         /// </summary>
         /// <param name="userId">ID de usuario remitente</param>
         /// <returns>DTO con registro de radicado</returns>
-        [Authorize(Roles = "Administrador, Gestor")]
+        //[Authorize(Roles = "Administrador, Gestor")]
         [HttpGet]
         [Route("GetBySenderUser/{userId}")]
         public ActionResult GetBySenderUser(long userId)
@@ -165,7 +165,7 @@ namespace CommunicationFiling.Controllers
         /// </summary>
         /// <param name="filing">DTO de registro de radicado</param>
         /// <returns>ID del registro de radicado creado</returns>
-        [Authorize(Roles = "Administrador, Gestor")]
+        //[Authorize(Roles = "Administrador, Gestor")]
         [HttpPost]
         [Route("Create")]
         [Produces("application/json")]
@@ -200,7 +200,7 @@ namespace CommunicationFiling.Controllers
         /// </summary>
         /// <param name="filing">DTO con datos de radicado</param>
         /// <returns>ID del registro actualizado</returns>
-        [Authorize(Roles = "Administrador")]
+        //[Authorize(Roles = "Administrador")]
         [HttpPut]
         [Route("Update")]
         [Produces("application/json")]
@@ -233,7 +233,7 @@ namespace CommunicationFiling.Controllers
         /// </summary>
         /// <param name="filing">DTO con datos de radicado a eliminar</param>
         /// <returns>Validacion exitosa del proceso</returns>
-        [Authorize(Roles = "Administrador")]
+        //[Authorize(Roles = "Administrador")]
         [HttpPost]
         [Route("Delete")]
         [Produces("application/json")]
@@ -266,7 +266,7 @@ namespace CommunicationFiling.Controllers
         /// </summary>
         /// <param name="id">ID del registro de radicado a eliminar</param>
         /// <returns>Validacion exitosa del proceso</returns>
-        [Authorize(Roles = "Administrador, Gestor, Destinatario")]
+        //[Authorize(Roles = "Administrador, Gestor, Destinatario")]
         [HttpPost]
         [Route("Delete/{id}")]
         [Produces("application/json")]

@@ -14,7 +14,7 @@ using Action = CommunicationFiling.DAL.Entities.Action;
 namespace CommunicationFiling.Controllers
 {
     [SwaggerTag("Actions API - Acciones del controlador para gestion de datos de la tabla Acciones")]
-    [Authorize(Roles = "Administrador")]
+    //[Authorize(Roles = "Administrador")]
     [ApiController]
     [Route("[controller]")]
     public class ActionController : BaseController<ActionController>
