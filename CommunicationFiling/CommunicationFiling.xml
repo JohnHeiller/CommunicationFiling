@@ -1,0 +1,656 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CommunicationFiling</name>
+    </assembly>
+    <members>
+        <member name="M:CommunicationFiling.Controllers.ActionController.Get(System.Int64)">
+            <summary>
+            Obtiene datos de registro parametrico de la accion por ID
+            </summary>
+            <param name="id">ID del registro</param>
+            <returns>DTO con registro de accion</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.ActionController.GetByCode(System.String)">
+            <summary>
+            Obtiene datos de registro parametrico por codigo
+            </summary>
+            <param name="code">Codigo</param>
+            <returns>DTO con datos del registro</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.ActionController.Create(CommunicationFiling.DTO.ActionDTO)">
+            <summary>
+            Crea o inserta registro parametrico para una accion
+            </summary>
+            <param name="action">DTO con datos de la accion</param>
+            <returns>ID resultante del registro</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.ActionController.Update(CommunicationFiling.DTO.ActionDTO)">
+            <summary>
+            Actualiza registro parametrico de una accion
+            </summary>
+            <param name="action">DTO de registro de accion</param>
+            <returns>ID del registro actualizada de accion</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.ActionController.Delete(CommunicationFiling.DTO.ActionDTO)">
+            <summary>
+            Elimina registro parametrico de accion
+            </summary>
+            <param name="action">DTO de registro de accion</param>
+            <returns>Validacion exitosa del proceso</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.ActionController.Delete(System.Int64)">
+            <summary>
+            Elimina registro parametrico de accion por ID
+            </summary>
+            <param name="id">ID del registro</param>
+            <returns>Validacion exitosa de eliminacion del registro</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.AuditController.Get(System.Int64)">
+            <summary>
+            Obtiene datos de registro de auditoria por ID
+            </summary>
+            <param name="id">ID del registro</param>
+            <returns>DTO del registro de auditoria</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.AuditController.Create(CommunicationFiling.DTO.AuditDTO)">
+            <summary>
+            Crea o inserta registro de auditoria
+            </summary>
+            <param name="audit">DTO del registro de auditoria</param>
+            <returns>ID del registro</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.AuditController.Update(CommunicationFiling.DAL.Entities.Audit)">
+            <summary>
+            Actualiza registro de auditoria por DTO
+            </summary>
+            <param name="audit">DTO del registro de auditoria a actualizar</param>
+            <returns>ID del registro actualizado</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.AuditController.Delete(CommunicationFiling.DTO.AuditDTO)">
+            <summary>
+            Elimina registro de auditoria por DTO
+            </summary>
+            <param name="audit">DTO con registro de auditoria a eliminar</param>
+            <returns>Validacion exitosa de eliminacion</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.AuditController.Delete(System.Int64)">
+            <summary>
+            Elimina registro de auditoria por ID
+            </summary>
+            <param name="id">ID del registro de auditoria</param>
+            <returns>Validacion exitosa de eliminacion del registro</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.CorrespondenceTypeController.Get(System.Int64)">
+            <summary>
+            Obtiene datos de registro de tipo de correspondencia por ID
+            </summary>
+            <param name="id">ID del registro</param>
+            <returns>DTO del registro de tipo de correspondencia</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.CorrespondenceTypeController.Create(CommunicationFiling.DTO.CorrespondenceTypeDTO)">
+            <summary>
+            Crea o inserta registro de tipo de correspondencia
+            </summary>
+            <param name="audit">DTO del registro de tipo de correspondencia</param>
+            <returns>ID del registro</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.CorrespondenceTypeController.Update(CommunicationFiling.DAL.Entities.CorrespondenceType)">
+            <summary>
+            Actualiza registro de tipo de correspondencia por DTO
+            </summary>
+            <param name="audit">DTO del registro de tipo de correspondencia a actualizar</param>
+            <returns>ID del registro actualizado</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.CorrespondenceTypeController.Delete(CommunicationFiling.DTO.CorrespondenceTypeDTO)">
+            <summary>
+            Elimina registro de tipo de correspondencia por DTO
+            </summary>
+            <param name="audit">DTO con registro de tipo de correspondencia a eliminar</param>
+            <returns>Validacion exitosa de eliminacion</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.CorrespondenceTypeController.Delete(System.Int64)">
+            <summary>
+            Elimina registro de tipo de correspondencia por ID
+            </summary>
+            <param name="id">ID del registro de tipo de correspondencia</param>
+            <returns>Validacion exitosa de eliminacion del registro</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.FilingController.Get(System.Int64)">
+            <summary>
+            Consulta registro de radicado por ID
+            </summary>
+            <param name="id">ID del registro de radicado</param>
+            <returns>DTO con datos de registro de radicado</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.FilingController.GetByConsecutive(System.String)">
+            <summary>
+            Consulta registro de radicado por consecutivo
+            </summary>
+            <param name="consecutive">Consecutivo del radicado</param>
+            <returns>DTO del registro de radicado</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.FilingController.GetByAddresseeUser(System.Int64)">
+            <summary>
+            Consultar registro de radicado por ID de destinatario
+            </summary>
+            <param name="userId">ID de usuario del destinatario</param>
+            <returns>DTO del registro de radicado</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.FilingController.GetBySenderUser(System.Int64)">
+            <summary>
+            Consulta registro de radicado por ID de remitente
+            </summary>
+            <param name="userId">ID de usuario remitente</param>
+            <returns>DTO con registro de radicado</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.FilingController.Create(CommunicationFiling.DTO.FilingDTO)">
+            <summary>
+            Crea o inserta registro de radicado por DTO
+            </summary>
+            <param name="filing">DTO de registro de radicado</param>
+            <returns>ID del registro de radicado creado</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.FilingController.Update(CommunicationFiling.DAL.Entities.Filing)">
+            <summary>
+            Actualiza registro de radicado por DTO
+            </summary>
+            <param name="filing">DTO con datos de radicado</param>
+            <returns>ID del registro actualizado</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.FilingController.Delete(CommunicationFiling.DTO.FilingDTO)">
+            <summary>
+            Elimina registro de radicado
+            </summary>
+            <param name="filing">DTO con datos de radicado a eliminar</param>
+            <returns>Validacion exitosa del proceso</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.FilingController.Delete(System.Int64)">
+            <summary>
+            Elimina registro de radicado por ID
+            </summary>
+            <param name="id">ID del registro de radicado a eliminar</param>
+            <returns>Validacion exitosa del proceso</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.RoleActionController.Get(System.Int64)">
+            <summary>
+            Obtiene datos de registro de relacion Rol y Accion por ID
+            </summary>
+            <param name="id">ID del registro</param>
+            <returns>DTO del registro de relacion Rol y Accion</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.RoleActionController.Create(CommunicationFiling.DTO.RoleActionDTO)">
+            <summary>
+            Crea o inserta registro de relacion Rol y Accion
+            </summary>
+            <param name="audit">DTO del registro de relacion Rol y Accion</param>
+            <returns>ID del registro</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.RoleActionController.Update(CommunicationFiling.DAL.Entities.RoleAction)">
+            <summary>
+            Actualiza registro de relacion Rol y Accion por DTO
+            </summary>
+            <param name="audit">DTO del registro de relacion Rol y Accion a actualizar</param>
+            <returns>ID del registro actualizado</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.RoleActionController.Delete(CommunicationFiling.DTO.RoleActionDTO)">
+            <summary>
+            Elimina registro de relacion Rol y Accion por DTO
+            </summary>
+            <param name="audit">DTO con registro de relacion Rol y Accion a eliminar</param>
+            <returns>Validacion exitosa de eliminacion</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.RoleActionController.Delete(System.Int64)">
+            <summary>
+            Elimina registro de relacion Rol y Accion por ID
+            </summary>
+            <param name="id">ID del registro de relacion Rol y Accion</param>
+            <returns>Validacion exitosa de eliminacion del registro</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.RoleController.Get(System.Int64)">
+            <summary>
+            Obtiene datos de registro del rol por ID
+            </summary>
+            <param name="id">ID del registro</param>
+            <returns>DTO del registro de auditoria</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.RoleController.Create(CommunicationFiling.DTO.RoleDTO)">
+            <summary>
+            Crea o inserta registro del rol
+            </summary>
+            <param name="audit">DTO del registro de rol</param>
+            <returns>ID del registro</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.RoleController.Update(CommunicationFiling.DAL.Entities.Role)">
+            <summary>
+            Actualiza registro de rol por DTO
+            </summary>
+            <param name="audit">DTO del registro de rol a actualizar</param>
+            <returns>ID del registro actualizado</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.RoleController.Delete(CommunicationFiling.DTO.RoleDTO)">
+            <summary>
+            Elimina registro de rol por DTO
+            </summary>
+            <param name="audit">DTO con registro de rol a eliminar</param>
+            <returns>Validacion exitosa de eliminacion</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.RoleController.Delete(System.Int64)">
+            <summary>
+            Elimina registro de rol por ID
+            </summary>
+            <param name="id">ID del registro de rol</param>
+            <returns>Validacion exitosa de eliminacion del registro</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.UserController.Get(System.Int64)">
+            <summary>
+            Obtiene datos de registro de usuario por ID
+            </summary>
+            <param name="id">ID del registro</param>
+            <returns>DTO del registro de usuario</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.UserController.Create(CommunicationFiling.DTO.UserDTO)">
+            <summary>
+            Crea o inserta registro de usuario
+            </summary>
+            <param name="audit">DTO del registro de usuario</param>
+            <returns>ID del registro</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.UserController.Update(CommunicationFiling.DAL.Entities.User)">
+            <summary>
+            Actualiza registro de usuario por DTO
+            </summary>
+            <param name="audit">DTO del registro de usuario a actualizar</param>
+            <returns>ID del registro actualizado</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.UserController.Delete(CommunicationFiling.DTO.UserDTO)">
+            <summary>
+            Elimina registro de usuario por DTO
+            </summary>
+            <param name="audit">DTO con registro de usuario a eliminar</param>
+            <returns>Validacion exitosa de eliminacion</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.UserController.Delete(System.Int64)">
+            <summary>
+            Elimina registro de usuario por ID
+            </summary>
+            <param name="id">ID del registro de usuario</param>
+            <returns>Validacion exitosa de eliminacion del registro</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.UserRoleController.Get(System.Int64)">
+            <summary>
+            Obtiene datos de registro de relacion Usuario y Rol por ID
+            </summary>
+            <param name="id">ID del registro</param>
+            <returns>DTO del registro de relacion Usuario y Rol</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.UserRoleController.Create(CommunicationFiling.DTO.UserRoleDTO)">
+            <summary>
+            Crea o inserta registro de relacion Usuario y Rol
+            </summary>
+            <param name="audit">DTO del registro de relacion Usuario y Rol</param>
+            <returns>ID del registro</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.UserRoleController.Update(CommunicationFiling.DAL.Entities.UserRole)">
+            <summary>
+            Actualiza registro de relacion Usuario y Rol por DTO
+            </summary>
+            <param name="audit">DTO del registro de relacion Usuario y Rol a actualizar</param>
+            <returns>ID del registro actualizado</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.UserRoleController.Delete(CommunicationFiling.DTO.UserRoleDTO)">
+            <summary>
+            Elimina registro de relacion Usuario y Rol por DTO
+            </summary>
+            <param name="audit">DTO con registro de relacion Usuario y Rol a eliminar</param>
+            <returns>Validacion exitosa de eliminacion</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.UserRoleController.Delete(System.Int64)">
+            <summary>
+            Elimina registro de relacion Usuario y Rol por ID
+            </summary>
+            <param name="id">ID del registro de relacion Usuario y Rol</param>
+            <returns>Validacion exitosa de eliminacion del registro</returns>
+        </member>
+        <member name="T:CommunicationFiling.DTO.ActionDTO">
+            <summary>
+            DTO de registro parametrica de accion
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.ActionDTO.Id">
+            <summary>
+            Identificador de registro de accion
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.ActionDTO.Code">
+            <summary>
+            Codigo del registro de accion
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.ActionDTO.ActionName">
+            <summary>
+            Nombre de la accion
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.ActionDTO.AuditId">
+            <summary>
+            ID de registro de auditoria
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.ActionDTO.IsValid">
+            <summary>
+            Boolean que indica si es valido el registro
+            </summary>
+        </member>
+        <member name="T:CommunicationFiling.DTO.AuditDTO">
+            <summary>
+            DTO del registro de auditoria
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.AuditDTO.Id">
+            <summary>
+            Identificador del registro de auditoria
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.AuditDTO.CreationDate">
+            <summary>
+            Fecha de creacion del registro
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.AuditDTO.CreationUserId">
+            <summary>
+            ID del usuario que registra la auditoria
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.AuditDTO.ModificationDate">
+            <summary>
+            Fecha de modificacion del registro
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.AuditDTO.ModificationUserId">
+            <summary>
+            ID del usuario que modifica el registro
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.AuditDTO.IsValid">
+            <summary>
+            Boolean que indica si es valido el registro
+            </summary>
+        </member>
+        <member name="T:CommunicationFiling.DTO.CorrespondenceTypeDTO">
+            <summary>
+            DTO de registro parametrico del tipo de correspondencia
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.CorrespondenceTypeDTO.Id">
+            <summary>
+            Identificador del registro del tipo de correspondencia
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.CorrespondenceTypeDTO.Code">
+            <summary>
+            Codigo del registro
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.CorrespondenceTypeDTO.TypeName">
+            <summary>
+            Nombre del tipo de correspondencia
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.CorrespondenceTypeDTO.AuditId">
+            <summary>
+            ID del registro de auditoria
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.CorrespondenceTypeDTO.IsValid">
+            <summary>
+            Boolean que indica si es valido el registro
+            </summary>
+        </member>
+        <member name="T:CommunicationFiling.DTO.Enums">
+            <summary>
+            Estados constantes o enumerables
+            </summary>
+        </member>
+        <member name="T:CommunicationFiling.DTO.ErrorDTO">
+            <summary>
+            DTO para registro y gestion de errores
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.ErrorDTO.State">
+            <summary>
+            Estado del error
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.ErrorDTO.Code">
+            <summary>
+            Codigo o metodo especifico del error
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.ErrorDTO.Description">
+            <summary>
+            Descripcion o mensaje del error
+            </summary>
+        </member>
+        <member name="T:CommunicationFiling.DTO.FilingDTO">
+            <summary>
+            DTO para tabla de radicados
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.FilingDTO.Id">
+            <summary>
+            Identificador de radicado
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.FilingDTO.Consecutive">
+            <summary>
+            Consecutivo del radicado
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.FilingDTO.StorageAddress">
+            <summary>
+            Direccion del documento en servidor o gestor documental
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.FilingDTO.Base64File">
+            <summary>
+            Data del documento en base64
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.FilingDTO.PDFFile">
+            <summary>
+            Documento digital cargado en IFormFile
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.FilingDTO.SenderUserId">
+            <summary>
+            ID de usuario del remitente
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.FilingDTO.AddresseeUserId">
+            <summary>
+            ID de usuario del destinatario
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.FilingDTO.CorrespondenceTypeId">
+            <summary>
+            ID del tipo de correspondencia
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.FilingDTO.AuditId">
+            <summary>
+            ID del registro de auditoria
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.FilingDTO.IsValid">
+            <summary>
+            Boolean que indica si es valido el registro
+            </summary>
+        </member>
+        <member name="M:CommunicationFiling.DTO.FilingDTO.#ctor(System.Int64,System.String,System.String,System.String,Microsoft.AspNetCore.Http.IFormFile,System.Int64,System.Int64,System.Int64,System.Int64,System.Boolean)">
+            <summary>
+            Inicializa el DTO validando los datos del documento digitalizado, facilitando el registro en BD
+            </summary>
+            <param name="id">ID del radicado</param>
+            <param name="consecutive">Consecutivo del radicado</param>
+            <param name="storageAddress">Direccion del archivo en un servidor o gestor documental</param>
+            <param name="base64File">Data del documento en base 64</param>
+            <param name="filePDF">documento cargado como IFormFile</param>
+            <param name="senderUserId">ID de usuario del remitente</param>
+            <param name="addresseeUserId">ID de usuario del destinatario</param>
+            <param name="correspondenceTypeId">ID del tipo de correspondencia</param>
+            <param name="auditId">ID de registro de auditoria</param>
+            <param name="isValid">bool que indica si el registro es valido o no</param>
+        </member>
+        <member name="T:CommunicationFiling.DTO.RoleActionDTO">
+            <summary>
+            DTO de registro de tabla relacional entre Roles y Acciones
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.RoleActionDTO.Id">
+            <summary>
+            Identificador del registro
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.RoleActionDTO.RoleId">
+            <summary>
+            ID del rol relacionado
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.RoleActionDTO.ActionId">
+            <summary>
+            ID de la accion relacionada
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.RoleActionDTO.AuditId">
+            <summary>
+            ID del registro de auditoria
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.RoleActionDTO.IsValid">
+            <summary>
+            Boolean que indica si es valido el registro
+            </summary>
+        </member>
+        <member name="T:CommunicationFiling.DTO.RoleDTO">
+            <summary>
+            DTO del registro parametrico de roles
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.RoleDTO.Id">
+            <summary>
+            Identificador del registro parametrico
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.RoleDTO.Code">
+            <summary>
+            Codigo del registro del rol
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.RoleDTO.RoleName">
+            <summary>
+            Nombre del rol
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.RoleDTO.AuditId">
+            <summary>
+            ID del registro de auditoria
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.RoleDTO.IsValid">
+            <summary>
+            Boolean que indica si es valido el registro
+            </summary>
+        </member>
+        <member name="T:CommunicationFiling.DTO.UserDTO">
+            <summary>
+            DTO del registro de usuarios
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.UserDTO.Id">
+            <summary>
+            Identificador del registro de usuario
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.UserDTO.FirstName">
+            <summary>
+            Nombre del usuario
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.UserDTO.LastName">
+            <summary>
+            Apellido del usuario
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.UserDTO.NumberID">
+            <summary>
+            Numero de identificacion del usuario
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.UserDTO.Phonenumber">
+            <summary>
+            Numero de telefono
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.UserDTO.Email">
+            <summary>
+            Direccion de correo electronico
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.UserDTO.ResidenceAddress">
+            <summary>
+            Direccion de residencia
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.UserDTO.UserName">
+            <summary>
+            Nombre de usuario para el sistema
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.UserDTO.Password">
+            <summary>
+            Contraseña de usuario
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.UserDTO.AuditId">
+            <summary>
+            ID de registro de auditoria
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.UserDTO.IsValid">
+            <summary>
+            Boolean que indica si es valido el registro
+            </summary>
+        </member>
+        <member name="T:CommunicationFiling.DTO.UserRoleDTO">
+            <summary>
+            DTO de tabla relacional entre Usuarios y Roles
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.UserRoleDTO.Id">
+            <summary>
+            Identificador del registro
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.UserRoleDTO.UserId">
+            <summary>
+            ID del usuario relacionado
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.UserRoleDTO.RoleId">
+            <summary>
+            ID del rol relacionado
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.UserRoleDTO.AuditId">
+            <summary>
+            ID del registro de auditoria
+            </summary>
+        </member>
+        <member name="P:CommunicationFiling.DTO.UserRoleDTO.IsValid">
+            <summary>
+            Boolean que indica si es valido el registro
+            </summary>
+        </member>
+    </members>
+</doc>

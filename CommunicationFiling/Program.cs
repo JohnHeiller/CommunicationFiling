@@ -20,6 +20,12 @@ namespace CommunicationFiling
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.ConfigureLogging((hostingContext, logging) =>
+                    {
+                        logging.ClearProviders(); // removes all providers from LoggerFactory
+                        logging.AddConsole();
+                        logging.AddTraceSource("Information, ActivityTracing"); // Add Trace listener provider
+                    });
                     webBuilder.UseStartup<Startup>();
                 });
     }
