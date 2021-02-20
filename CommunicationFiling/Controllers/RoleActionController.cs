@@ -3,39 +3,39 @@ using System.Reflection;
 using AutoMapper;
 using CommunicationFiling.Controllers.Base;
 using CommunicationFiling.DAL.Contracts;
+using CommunicationFiling.DAL.Entities;
 using CommunicationFiling.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
-using Action = CommunicationFiling.DAL.Entities.Action;
 
 namespace CommunicationFiling.Controllers
 {
-    [SwaggerTag("Actions API - Acciones del controlador para gestion de datos de la tabla Acciones")]
+    [SwaggerTag("RolesActions API - Acciones del controlador para gestion de datos de la tabla relacional Roles-Acciones")]
     [Authorize(Roles = "Administrador")]
     [ApiController]
     [Route("[controller]")]
-    public class ActionController : BaseController<ActionController>
+    public class RoleActionController : BaseController<RoleActionController>
     {
         public IConfiguration Configuration { get; }
         private readonly IMapper Mapper;
-        private readonly IActionRepo ActionRepo;
+        private readonly IRoleActionRepo RoleActionRepo;
 
-        public ActionController(IConfiguration configuration, IMapper mapper, 
-            IActionRepo actionRepo, ILogger<ActionController> logger) : base(logger)
+        public RoleActionController(IConfiguration configuration, IMapper mapper,
+            IRoleActionRepo auditRepo, ILogger<RoleActionController> logger) : base(logger)
         {
             Configuration = configuration;
             Mapper = mapper;
-            ActionRepo = actionRepo;
+            RoleActionRepo = auditRepo;
         }
 
         /// <summary>
-        /// Obtiene datos de registro parametrico de la accion por ID
+        /// Obtiene datos de registro de relacion Rol y Accion por ID
         /// </summary>
         /// <param name="id">ID del registro</param>
-        /// <returns>DTO con registro de accion</returns>
+        /// <returns>DTO del registro de relacion Rol y Accion</returns>
         [HttpGet]
         [Route("Get/{id}")]
         public ActionResult Get(long id)
@@ -48,8 +48,7 @@ namespace CommunicationFiling.Controllers
                     CreateLog(Enums.BadRequest, GetMethodCode(method), LogLevel.Information);
                     return BadRequest();
                 }
-
-                var response = ActionRepo.Get(id);
+                var response = RoleActionRepo.Get(id);
                 if (response != null)
                 {
                     CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
@@ -68,52 +67,22 @@ namespace CommunicationFiling.Controllers
         }
 
         /// <summary>
-        /// Obtiene datos de registro parametrico por codigo
+        /// Crea o inserta registro de relacion Rol y Accion
         /// </summary>
-        /// <param name="code">Codigo</param>
-        /// <returns>DTO con datos del registro</returns>
-        [HttpGet]
-        [Route("GetByCode/{code}")]
-        public ActionResult GetByCode(string code)
-        {
-            MethodBase method = MethodBase.GetCurrentMethod();
-            try
-            {
-                var response = ActionRepo.Get(x => x.Code == code);
-                if (response != null)
-                {
-                    CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
-                    return Ok(response);
-                }
-                else
-                {
-                    CreateLog(Enums.NotFound, GetMethodCode(method), LogLevel.Warning);
-                    return NotFound();
-                }
-            }
-            catch (Exception ex)
-            {
-                return HandleError(ex.Message, GetMethodCode(method));
-            }
-        }
-
-        /// <summary>
-        /// Crea o inserta registro parametrico para una accion
-        /// </summary>
-        /// <param name="action">DTO con datos de la accion</param>
-        /// <returns>ID resultante del registro</returns>
+        /// <param name="audit">DTO del registro de relacion Rol y Accion</param>
+        /// <returns>ID del registro</returns>
         [HttpPost]
         [Route("Create")]
         [Produces("application/json")]
-        public ActionResult Create(ActionDTO action)
+        public ActionResult Create(RoleActionDTO audit)
         {
             MethodBase method = MethodBase.GetCurrentMethod();
             try
             {
-                Action newAction = Mapper.Map<Action>(action);
-                newAction.IsValid = true;
-                newAction.Id = 0;
-                var response = ActionRepo.Create(newAction);
+                RoleAction newRoleAction = Mapper.Map<RoleAction>(audit);
+                newRoleAction.IsValid = true;
+                newRoleAction.Id = 0;
+                var response = RoleActionRepo.Create(newRoleAction);
                 if (response > 0)
                 {
                     CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
@@ -132,24 +101,24 @@ namespace CommunicationFiling.Controllers
         }
 
         /// <summary>
-        /// Actualiza registro parametrico de una accion
+        /// Actualiza registro de relacion Rol y Accion por DTO
         /// </summary>
-        /// <param name="action">DTO de registro de accion</param>
-        /// <returns>ID del registro actualizada de accion</returns>
+        /// <param name="audit">DTO del registro de relacion Rol y Accion a actualizar</param>
+        /// <returns>ID del registro actualizado</returns>
         [HttpPut]
         [Route("Update")]
         [Produces("application/json")]
-        public ActionResult Update(ActionDTO action)
+        public ActionResult Update(RoleAction audit)
         {
             MethodBase method = MethodBase.GetCurrentMethod();
             try
             {
-                if (action.Id > 0)
+                if (audit.Id > 0)
                 {
-                    Action upAction = Mapper.Map<Action>(action);
-                    ActionRepo.Update(upAction);
+                    RoleAction upRoleAction = Mapper.Map<RoleAction>(audit);
+                    RoleActionRepo.Update(upRoleAction);
                     CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
-                    return Ok(upAction.Id);
+                    return Ok(upRoleAction.Id);
                 }
                 else
                 {
@@ -164,22 +133,22 @@ namespace CommunicationFiling.Controllers
         }
 
         /// <summary>
-        /// Elimina registro parametrico de accion
+        /// Elimina registro de relacion Rol y Accion por DTO
         /// </summary>
-        /// <param name="action">DTO de registro de accion</param>
-        /// <returns>Validacion exitosa del proceso</returns>
+        /// <param name="audit">DTO con registro de relacion Rol y Accion a eliminar</param>
+        /// <returns>Validacion exitosa de eliminacion</returns>
         [HttpPost]
         [Route("Delete")]
         [Produces("application/json")]
-        public ActionResult Delete(ActionDTO action)
+        public ActionResult Delete(RoleActionDTO audit)
         {
             MethodBase method = MethodBase.GetCurrentMethod();
             try
             {
-                if (action.Id > 0)
+                if (audit.Id > 0)
                 {
-                    Action delAction = Mapper.Map<Action>(action);
-                    ActionRepo.Delete(delAction);
+                    RoleAction delRoleAction = Mapper.Map<RoleAction>(audit);
+                    RoleActionRepo.Delete(delRoleAction);
                     CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
                     return Ok(true);
                 }
@@ -196,9 +165,9 @@ namespace CommunicationFiling.Controllers
         }
 
         /// <summary>
-        /// Elimina registro parametrico de accion por ID
+        /// Elimina registro de relacion Rol y Accion por ID
         /// </summary>
-        /// <param name="id">ID del registro</param>
+        /// <param name="id">ID del registro de relacion Rol y Accion</param>
         /// <returns>Validacion exitosa de eliminacion del registro</returns>
         [HttpPost]
         [Route("Delete/{id}")]
@@ -210,10 +179,10 @@ namespace CommunicationFiling.Controllers
             {
                 if (id > 0)
                 {
-                    var delAction = ActionRepo.Get(id);
-                    if (delAction != null && delAction.Id > 0)
+                    var delRoleAction = RoleActionRepo.Get(id);
+                    if (delRoleAction != null && delRoleAction.Id > 0)
                     {
-                        ActionRepo.Delete(delAction);
+                        RoleActionRepo.Delete(delRoleAction);
                         CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
                         return Ok(true);
                     }

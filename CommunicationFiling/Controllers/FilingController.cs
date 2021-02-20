@@ -3,39 +3,40 @@ using System.Reflection;
 using AutoMapper;
 using CommunicationFiling.Controllers.Base;
 using CommunicationFiling.DAL.Contracts;
+using CommunicationFiling.DAL.Entities;
 using CommunicationFiling.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
-using Action = CommunicationFiling.DAL.Entities.Action;
 
 namespace CommunicationFiling.Controllers
 {
-    [SwaggerTag("Actions API - Acciones del controlador para gestion de datos de la tabla Acciones")]
-    [Authorize(Roles = "Administrador")]
+    [SwaggerTag("Filings API - Acciones del controlador para gestion de datos de la tabla Radicados")]
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class ActionController : BaseController<ActionController>
+    public class FilingController : BaseController<FilingController>
     {
         public IConfiguration Configuration { get; }
         private readonly IMapper Mapper;
-        private readonly IActionRepo ActionRepo;
+        private readonly IFilingRepo FilingRepo;
 
-        public ActionController(IConfiguration configuration, IMapper mapper, 
-            IActionRepo actionRepo, ILogger<ActionController> logger) : base(logger)
+        public FilingController(IConfiguration configuration, IMapper mapper,
+            IFilingRepo filingRepo, ILogger<FilingController> logger) : base(logger)
         {
             Configuration = configuration;
             Mapper = mapper;
-            ActionRepo = actionRepo;
+            FilingRepo = filingRepo;
         }
 
         /// <summary>
-        /// Obtiene datos de registro parametrico de la accion por ID
+        /// Consulta registro de radicado por ID
         /// </summary>
-        /// <param name="id">ID del registro</param>
-        /// <returns>DTO con registro de accion</returns>
+        /// <param name="id">ID del registro de radicado</param>
+        /// <returns>DTO con datos de registro de radicado</returns>
+        [Authorize(Roles = "Administrador, Gestor, Destinatario")]
         [HttpGet]
         [Route("Get/{id}")]
         public ActionResult Get(long id)
@@ -48,8 +49,7 @@ namespace CommunicationFiling.Controllers
                     CreateLog(Enums.BadRequest, GetMethodCode(method), LogLevel.Information);
                     return BadRequest();
                 }
-
-                var response = ActionRepo.Get(id);
+                var response = FilingRepo.Get(id);
                 if (response != null)
                 {
                     CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
@@ -68,18 +68,19 @@ namespace CommunicationFiling.Controllers
         }
 
         /// <summary>
-        /// Obtiene datos de registro parametrico por codigo
+        /// Consulta registro de radicado por consecutivo
         /// </summary>
-        /// <param name="code">Codigo</param>
-        /// <returns>DTO con datos del registro</returns>
+        /// <param name="consecutive">Consecutivo del radicado</param>
+        /// <returns>DTO del registro de radicado</returns>
+        [Authorize(Roles = "Administrador, Gestor, Destinatario")]
         [HttpGet]
-        [Route("GetByCode/{code}")]
-        public ActionResult GetByCode(string code)
+        [Route("GetByConsecutive/{consecutive}")]
+        public ActionResult GetByConsecutive(string consecutive)
         {
             MethodBase method = MethodBase.GetCurrentMethod();
             try
             {
-                var response = ActionRepo.Get(x => x.Code == code);
+                var response = FilingRepo.Get(x => x.Consecutive == consecutive);
                 if (response != null)
                 {
                     CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
@@ -98,22 +99,85 @@ namespace CommunicationFiling.Controllers
         }
 
         /// <summary>
-        /// Crea o inserta registro parametrico para una accion
+        /// Consultar registro de radicado por ID de destinatario
         /// </summary>
-        /// <param name="action">DTO con datos de la accion</param>
-        /// <returns>ID resultante del registro</returns>
+        /// <param name="userId">ID de usuario del destinatario</param>
+        /// <returns>DTO del registro de radicado</returns>
+        [Authorize(Roles = "Administrador, Gestor, Destinatario")]
+        [HttpGet]
+        [Route("GetByAddresseeUser/{userId}")]
+        public ActionResult GetByAddresseeUser(long userId)
+        {
+            MethodBase method = MethodBase.GetCurrentMethod();
+            try
+            {
+                var response = FilingRepo.Get(x => x.AddresseeUserId == userId);
+                if (response != null)
+                {
+                    CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
+                    return Ok(response);
+                }
+                else
+                {
+                    CreateLog(Enums.NotFound, GetMethodCode(method), LogLevel.Warning);
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                return HandleError(ex.Message, GetMethodCode(method));
+            }
+        }
+
+        /// <summary>
+        /// Consulta registro de radicado por ID de remitente
+        /// </summary>
+        /// <param name="userId">ID de usuario remitente</param>
+        /// <returns>DTO con registro de radicado</returns>
+        [Authorize(Roles = "Administrador, Gestor")]
+        [HttpGet]
+        [Route("GetBySenderUser/{userId}")]
+        public ActionResult GetBySenderUser(long userId)
+        {
+            MethodBase method = MethodBase.GetCurrentMethod();
+            try
+            {
+                var response = FilingRepo.Get(x => x.SenderUserId == userId);
+                if (response != null)
+                {
+                    CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
+                    return Ok(response);
+                }
+                else
+                {
+                    CreateLog(Enums.NotFound, GetMethodCode(method), LogLevel.Warning);
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                return HandleError(ex.Message, GetMethodCode(method));
+            }
+        }
+
+        /// <summary>
+        /// Crea o inserta registro de radicado por DTO
+        /// </summary>
+        /// <param name="filing">DTO de registro de radicado</param>
+        /// <returns>ID del registro de radicado creado</returns>
+        [Authorize(Roles = "Administrador, Gestor")]
         [HttpPost]
         [Route("Create")]
         [Produces("application/json")]
-        public ActionResult Create(ActionDTO action)
+        public ActionResult Create(FilingDTO filing)
         {
             MethodBase method = MethodBase.GetCurrentMethod();
             try
             {
-                Action newAction = Mapper.Map<Action>(action);
+                Filing newAction = Mapper.Map<Filing>(filing);
                 newAction.IsValid = true;
                 newAction.Id = 0;
-                var response = ActionRepo.Create(newAction);
+                var response = FilingRepo.Create(newAction);
                 if (response > 0)
                 {
                     CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
@@ -132,22 +196,23 @@ namespace CommunicationFiling.Controllers
         }
 
         /// <summary>
-        /// Actualiza registro parametrico de una accion
+        /// Actualiza registro de radicado por DTO
         /// </summary>
-        /// <param name="action">DTO de registro de accion</param>
-        /// <returns>ID del registro actualizada de accion</returns>
+        /// <param name="filing">DTO con datos de radicado</param>
+        /// <returns>ID del registro actualizado</returns>
+        [Authorize(Roles = "Administrador")]
         [HttpPut]
         [Route("Update")]
         [Produces("application/json")]
-        public ActionResult Update(ActionDTO action)
+        public ActionResult Update(Filing filing)
         {
             MethodBase method = MethodBase.GetCurrentMethod();
             try
             {
-                if (action.Id > 0)
+                if (filing.Id > 0)
                 {
-                    Action upAction = Mapper.Map<Action>(action);
-                    ActionRepo.Update(upAction);
+                    Filing upAction = Mapper.Map<Filing>(filing);
+                    FilingRepo.Update(upAction);
                     CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
                     return Ok(upAction.Id);
                 }
@@ -164,22 +229,23 @@ namespace CommunicationFiling.Controllers
         }
 
         /// <summary>
-        /// Elimina registro parametrico de accion
+        /// Elimina registro de radicado
         /// </summary>
-        /// <param name="action">DTO de registro de accion</param>
+        /// <param name="filing">DTO con datos de radicado a eliminar</param>
         /// <returns>Validacion exitosa del proceso</returns>
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         [Route("Delete")]
         [Produces("application/json")]
-        public ActionResult Delete(ActionDTO action)
+        public ActionResult Delete(FilingDTO filing)
         {
             MethodBase method = MethodBase.GetCurrentMethod();
             try
             {
-                if (action.Id > 0)
+                if (filing.Id > 0)
                 {
-                    Action delAction = Mapper.Map<Action>(action);
-                    ActionRepo.Delete(delAction);
+                    Filing delAction = Mapper.Map<Filing>(filing);
+                    FilingRepo.Delete(delAction);
                     CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
                     return Ok(true);
                 }
@@ -196,10 +262,11 @@ namespace CommunicationFiling.Controllers
         }
 
         /// <summary>
-        /// Elimina registro parametrico de accion por ID
+        /// Elimina registro de radicado por ID
         /// </summary>
-        /// <param name="id">ID del registro</param>
-        /// <returns>Validacion exitosa de eliminacion del registro</returns>
+        /// <param name="id">ID del registro de radicado a eliminar</param>
+        /// <returns>Validacion exitosa del proceso</returns>
+        [Authorize(Roles = "Administrador, Gestor, Destinatario")]
         [HttpPost]
         [Route("Delete/{id}")]
         [Produces("application/json")]
@@ -210,10 +277,10 @@ namespace CommunicationFiling.Controllers
             {
                 if (id > 0)
                 {
-                    var delAction = ActionRepo.Get(id);
+                    var delAction = FilingRepo.Get(id);
                     if (delAction != null && delAction.Id > 0)
                     {
-                        ActionRepo.Delete(delAction);
+                        FilingRepo.Delete(delAction);
                         CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
                         return Ok(true);
                     }
