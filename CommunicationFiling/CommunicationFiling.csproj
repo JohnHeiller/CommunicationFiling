@@ -29,5 +29,9 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DB_Repo\" />
+  </ItemGroup>
+
 
 </Project>
