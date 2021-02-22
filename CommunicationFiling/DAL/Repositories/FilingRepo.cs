@@ -35,6 +35,10 @@ namespace CommunicationFiling.DAL.Repositories
         public IEnumerable<Filing> Get(Expression<Func<Filing, bool>> predicate)
         {
             return _context.Filings
+                .Include(x => x.Audit)
+                .Include(x => x.AddresseeUser)
+                .Include(x => x.SenderUser)
+                .Include(x => x.CorrespondenceType)
                 .Where(predicate)
                 .AsNoTracking()
                 .ToList();
@@ -63,6 +67,12 @@ namespace CommunicationFiling.DAL.Repositories
 
         public long Create(Filing entity)
         {
+            entity.Id = 0;
+            entity.IsValid = true;
+            if (entity.AuditId == 0)
+            {
+                entity.AuditId = GenerateAudit(null);
+            }
             if (entity.CorrespondenceTypeId > 0)
             {
                 entity.Consecutive = GenerateConsecutive(entity.CorrespondenceTypeId);
@@ -85,6 +95,7 @@ namespace CommunicationFiling.DAL.Repositories
         public void Delete(Filing entity)
         {
             _context.Filings.Remove(entity);
+            _context.SaveChanges();
         }
 
         public void Update(Filing entity)
@@ -117,6 +128,20 @@ namespace CommunicationFiling.DAL.Repositories
                 }
             }
             return tmpConsecutive;
+        }
+
+        private long GenerateAudit(long? userId)
+        {
+            Audit audit = new Audit()
+            {
+                CreationDate = DateTime.Now,
+                CreationUserId = (userId.HasValue && userId.Value > 0) ? userId.Value : _context.Users.FirstOrDefault(x => x.FirstName == "ADMIN").Id,
+                IsValid = true
+            };
+            _context.Audits.Add(audit);
+            _context.SaveChanges();
+
+            return audit.Id;
         }
     }
 }

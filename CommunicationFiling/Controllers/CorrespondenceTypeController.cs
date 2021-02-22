@@ -67,6 +67,35 @@ namespace CommunicationFiling.Controllers
         }
 
         /// <summary>
+        /// Obtiene datos de todos los registro de tipo de correspondencia
+        /// </summary>
+        /// <returns>DTO de registros de tipo de correspondencia</returns>
+        [HttpGet]
+        [Route("GetAll")]
+        public ActionResult Get()
+        {
+            MethodBase method = MethodBase.GetCurrentMethod();
+            try
+            {
+                var response = CorrespondenceTypeRepo.Get();
+                if (response != null)
+                {
+                    CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
+                    return Ok(response);
+                }
+                else
+                {
+                    CreateLog(Enums.NotFound, GetMethodCode(method), LogLevel.Warning);
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                return HandleError(ex.Message, GetMethodCode(method));
+            }
+        }
+
+        /// <summary>
         /// Crea o inserta registro de tipo de correspondencia
         /// </summary>
         /// <param name="correspondenceType">DTO del registro de tipo de correspondencia</param>

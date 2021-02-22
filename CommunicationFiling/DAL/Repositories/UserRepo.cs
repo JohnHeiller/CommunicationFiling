@@ -27,6 +27,7 @@ namespace CommunicationFiling.DAL.Repositories
         public IEnumerable<User> Get()
         {
             return _context.Users
+                .Include(x => x.Audit)
                 .Where(x => x.IsValid == true)
                 .AsNoTracking()
                 .ToList();

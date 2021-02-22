@@ -88,6 +88,12 @@
             <param name="id">ID del registro</param>
             <returns>DTO del registro de tipo de correspondencia</returns>
         </member>
+        <member name="M:CommunicationFiling.Controllers.CorrespondenceTypeController.Get">
+            <summary>
+            Obtiene datos de todos los registro de tipo de correspondencia
+            </summary>
+            <returns>DTO de registros de tipo de correspondencia</returns>
+        </member>
         <member name="M:CommunicationFiling.Controllers.CorrespondenceTypeController.Create(CommunicationFiling.DTO.CorrespondenceTypeDTO)">
             <summary>
             Crea o inserta registro de tipo de correspondencia
@@ -248,6 +254,12 @@
             </summary>
             <param name="id">ID del registro</param>
             <returns>DTO del registro de usuario</returns>
+        </member>
+        <member name="M:CommunicationFiling.Controllers.UserController.Get">
+            <summary>
+            Obtiene datos de todos los registro de usuario
+            </summary>
+            <returns>DTO de los registros de usuario</returns>
         </member>
         <member name="M:CommunicationFiling.Controllers.UserController.Create(CommunicationFiling.DTO.UserDTO)">
             <summary>
@@ -457,11 +469,6 @@
             Data del documento en base64
             </summary>
         </member>
-        <member name="P:CommunicationFiling.DTO.FilingDTO.PDFFile">
-            <summary>
-            Documento digital cargado en IFormFile
-            </summary>
-        </member>
         <member name="P:CommunicationFiling.DTO.FilingDTO.SenderUserId">
             <summary>
             ID de usuario del remitente
@@ -486,21 +493,6 @@
             <summary>
             Boolean que indica si es valido el registro
             </summary>
-        </member>
-        <member name="M:CommunicationFiling.DTO.FilingDTO.#ctor(System.Int64,System.String,System.String,System.String,Microsoft.AspNetCore.Http.IFormFile,System.Int64,System.Int64,System.Int64,System.Int64,System.Boolean)">
-            <summary>
-            Inicializa el DTO validando los datos del documento digitalizado, facilitando el registro en BD
-            </summary>
-            <param name="id">ID del radicado</param>
-            <param name="consecutive">Consecutivo del radicado</param>
-            <param name="storageAddress">Direccion del archivo en un servidor o gestor documental</param>
-            <param name="base64File">Data del documento en base 64</param>
-            <param name="filePDF">documento cargado como IFormFile</param>
-            <param name="senderUserId">ID de usuario del remitente</param>
-            <param name="addresseeUserId">ID de usuario del destinatario</param>
-            <param name="correspondenceTypeId">ID del tipo de correspondencia</param>
-            <param name="auditId">ID de registro de auditoria</param>
-            <param name="isValid">bool que indica si el registro es valido o no</param>
         </member>
         <member name="T:CommunicationFiling.DTO.RoleActionDTO">
             <summary>

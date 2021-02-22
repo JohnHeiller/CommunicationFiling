@@ -28,11 +28,6 @@ namespace CommunicationFiling.DTO
         /// </summary>
         public string Base64File { get; set; }
         /// <summary>
-        /// Documento digital cargado en IFormFile
-        /// </summary>
-        [NotMapped]
-        public IFormFile PDFFile { get; set; }
-        /// <summary>
         /// ID de usuario del remitente
         /// </summary>
         public long SenderUserId { get; set; }
@@ -56,55 +51,5 @@ namespace CommunicationFiling.DTO
         public UserDTO AddresseeUser { get; set; }
         public CorrespondenceTypeDTO CorrespondenceType { get; set; }
         public AuditDTO Audit { get; set; }
-
-        /// <summary>
-        /// Inicializa el DTO validando los datos del documento digitalizado, facilitando el registro en BD
-        /// </summary>
-        /// <param name="id">ID del radicado</param>
-        /// <param name="consecutive">Consecutivo del radicado</param>
-        /// <param name="storageAddress">Direccion del archivo en un servidor o gestor documental</param>
-        /// <param name="base64File">Data del documento en base 64</param>
-        /// <param name="filePDF">documento cargado como IFormFile</param>
-        /// <param name="senderUserId">ID de usuario del remitente</param>
-        /// <param name="addresseeUserId">ID de usuario del destinatario</param>
-        /// <param name="correspondenceTypeId">ID del tipo de correspondencia</param>
-        /// <param name="auditId">ID de registro de auditoria</param>
-        /// <param name="isValid">bool que indica si el registro es valido o no</param>
-        public FilingDTO(long id, string consecutive, string storageAddress, string base64File, IFormFile filePDF, long senderUserId, long addresseeUserId, long correspondenceTypeId, long auditId, bool isValid)
-        {
-            Id = id;
-            Consecutive = consecutive;
-            SenderUserId = senderUserId;
-            AddresseeUserId = addresseeUserId;
-            CorrespondenceTypeId = correspondenceTypeId;
-            AuditId = auditId;
-            IsValid = isValid;
-
-            if (filePDF != null && string.IsNullOrEmpty(base64File) && string.IsNullOrEmpty(storageAddress))
-            {
-                using var ms = new MemoryStream();
-                filePDF.CopyTo(ms);
-                var fileBytes = ms.ToArray();
-                string b64Converted = Convert.ToBase64String(fileBytes);
-                if (!string.IsNullOrWhiteSpace(b64Converted))
-                {
-                    Base64File = b64Converted;
-                    StorageAddress = string.Empty;
-                    PDFFile = null;
-                }
-            }
-            else if (!string.IsNullOrEmpty(base64File) || !string.IsNullOrEmpty(storageAddress))
-            {
-                Base64File = base64File;
-                StorageAddress = storageAddress;
-                PDFFile = null;
-            }
-            else
-            {
-                Base64File = string.Empty;
-                StorageAddress = string.Empty;
-                PDFFile = null;
-            }
-        }
     }
 }

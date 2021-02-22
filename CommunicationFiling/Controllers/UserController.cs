@@ -67,6 +67,35 @@ namespace CommunicationFiling.Controllers
         }
 
         /// <summary>
+        /// Obtiene datos de todos los registro de usuario
+        /// </summary>
+        /// <returns>DTO de los registros de usuario</returns>
+        [HttpGet]
+        [Route("GetAll")]
+        public ActionResult Get()
+        {
+            MethodBase method = MethodBase.GetCurrentMethod();
+            try
+            {
+                var response = UserRepo.Get();
+                if (response != null)
+                {
+                    CreateLog(Enums.Success, GetMethodCode(method), LogLevel.Information);
+                    return Ok(response);
+                }
+                else
+                {
+                    CreateLog(Enums.NotFound, GetMethodCode(method), LogLevel.Warning);
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                return HandleError(ex.Message, GetMethodCode(method));
+            }
+        }
+
+        /// <summary>
         /// Crea o inserta registro de usuario
         /// </summary>
         /// <param name="user">DTO del registro de usuario</param>

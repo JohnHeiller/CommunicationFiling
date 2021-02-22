@@ -27,6 +27,7 @@ namespace CommunicationFiling.DAL.Repositories
         public IEnumerable<CorrespondenceType> Get()
         {
             return _context.CorrespondenceTypes
+                .Include(x => x.Audit)
                 .Where(x => x.IsValid == true)
                 .AsNoTracking()
                 .ToList();
