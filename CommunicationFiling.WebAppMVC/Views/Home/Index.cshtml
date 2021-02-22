@@ -1,0 +1,667 @@
+﻿@{
+    ViewData["Title"] = "ALPHA - RADICACIÓN";
+}
+
+<input id="b64File" value="" hidden />
+<input id="consecutiveToDelete" value="" hidden />
+<input id="idFilingToDelete" value="" hidden />
+<div class="text-center">
+    <h1 class="display-4">ALPHA</h1>
+    <p>Learn about <a href="https://www.linkedin.com/in/heiller-martinez">Engr. John H. Martinez</a>.</p>
+</div>
+<div>
+    <br />
+    <br />
+    <br />
+</div>
+<div class="text-left">
+    <div class="row form-group col-md-12">
+        <div class="form-group col-md-12" data-toggle="tooltip" data-placement="bottom" title="Crear nuevo registro de radicado">
+            <label class="font-weight-bold" style="width:300px;">Nueva radicación</label>
+            <button class="button col-6" type="button" onclick="configModalFiling('');">Radicar</button>
+        </div>
+    </div>
+    <div class="row form-group col-md-12">
+        <div class="form-group col-md-12" data-toggle="tooltip" data-placement="bottom" title="Obtener datos de registro de radicado">
+            <label class="font-weight-bold" style="width:300px;">Consultar radicación</label>
+        </div>
+        <div class="form-group col-md-12" data-toggle="tooltip" data-placement="bottom" title="Ingrese consecutivo del radicado">
+            <input id="getConsecutive" type="text" class="col-6" style="width:300px;" placeholder="Ej: XX00000000">
+            <button class="button col-6" type="button" onclick="validateConsecutive('getConsecutive')">Consultar</button>
+        </div>
+    </div>
+    <div class="row form-group col-md-12">
+        <div class="form-group col-md-12" data-toggle="tooltip" data-placement="bottom" title="Actualizar datos de registro de radicado">
+            <label class="font-weight-bold" style="width:300px;">Actualizar radicación</label>
+        </div>
+        <div class="form-group col-md-12" data-toggle="tooltip" data-placement="bottom" title="Ingrese consecutivo del radicado">
+            <input id="upConsecutive" type="text" class="col-6" style="width:300px;" placeholder="Ej: XX00000000">
+            <button class="button col-6" type="button" onclick="validateConsecutive('upConsecutive')">Editar</button>
+        </div>
+    </div>
+    <div class="row form-group col-md-12">
+        <div class="form-group col-md-12" data-toggle="tooltip" data-placement="bottom" title="Eliminar datos de registro de radicado">
+            <label class="font-weight-bold" style="width:300px;">Eliminar radicación</label>
+        </div>
+        <div class="form-group col-md-12" data-toggle="tooltip" data-placement="bottom" title="Ingrese consecutivo del radicado">
+            <input id="delConsecutive" type="text" class="col-6" style="width:300px;" placeholder="Ej: XX00000000">
+            <button class="button col-6" type="button" onclick="validateConsecutive('delConsecutive')">Eliminar</button>
+        </div>
+    </div>
+</div>
+
+
+<div data-keyboard="false" data-backdrop="static" class="modal fade" id="filing-display">
+    <div class="modal-dialog modal-dialog-top" style="margin-left: 150px;margin-right: 150px;width: 1000px;">
+        <div class="modal-content" style="width:1000px;">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Comunicación</h4>
+                <button type="button" class="close" onclick="clearFilingModal();" data-dismiss="modal">×</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <p class="font-weight-bold">Radicación</p>
+                    <div class="row form-group col-md-12">
+                        <div class="form-group col-md-12" style="align-content:end" data-toggle="tooltip" data-placement="bottom" title="Seleccione un tipo de comunicación">
+                            <label class="font-weight-bold col-6">Tipo de comunicación</label>
+                            <select style="width:300px;" id="commTypeSelect" class="col-6">
+                                <option value="">Selección...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row form-group col-md-12">
+                        <div class="form-group col-md-6" data-toggle="tooltip" data-placement="bottom" title="Generado automaticamente">
+                            <label class="font-weight-bold">Consecutivo</label>
+                            <input class="form-control" id="consecutiveText" placeholder="Ej: XX00000000" readonly>
+                        </div>
+                        <div class="form-group col-md-6" data-toggle="tooltip" data-placement="bottom" title="Generado automáticamente">
+                            <label class="font-weight-bold">Fecha de registro</label>
+                            <input class="form-control" type="date" id="dateFiling" data-date-format="DD/MM/YYYY" value="2021-01-01" placeholder="Ej: YYYY-MM-DD" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <p class="font-weight-bold">Remitente</p>
+                    <div class="row form-group col-md-12" id="senderSelectGroup">
+                        <div class="form-group col-md-12" data-toggle="tooltip" data-placement="bottom" title="Seleccione el remitente">
+                            <label class="font-weight-bold col-6">Seleccione el remitente</label>
+                            <select style="width:300px;" id="senderSelect" class="col-6" onchange="selectValueEvent('sender');">
+                                <option value="">Selección...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" id="senderData">
+                        <div class="row form-group col-md-12">
+                            <div class="form-group col-md-6" data-toggle="tooltip" data-placement="bottom" title="Ingrese únicamente letras">
+                                <label class="font-weight-bold">Nombre</label>
+                                <input class="form-control" id="senderNameText" placeholder="Ej: Manuel" onkeypress="return onlyText(event);" readonly>
+                            </div>
+                            <div class="form-group col-md-6" data-toggle="tooltip" data-placement="bottom" title="Ingrese únicamente letras">
+                                <label class="font-weight-bold">Apellido</label>
+                                <input class="form-control" id="senderLastNameText" placeholder="Ej: Alvarez" onkeypress="return onlyText(event);" readonly>
+                            </div>
+                        </div>
+                        <div class="row form-group col-md-12">
+                            <div class="form-group col-md-3" data-toggle="tooltip" data-placement="bottom" title="Ingrese únicamente números">
+                                <label class="font-weight-bold">Número de identificación</label>
+                                <input class="form-control" id="senderNumberIdText" placeholder="Ej: 102030405" onkeypress="return onlyNumber(event);" readonly>
+                            </div>
+                            <div class="form-group col-md-3" data-toggle="tooltip" data-placement="bottom" title="Ingrese únicamente números">
+                                <label class="font-weight-bold">Número de teléfono</label>
+                                <input class="form-control" id="senderPhoneText" placeholder="Ej: 3109999999" onkeypress="return onlyNumber(event);" readonly>
+                            </div>
+                            <div class="form-group col-md-6" data-toggle="tooltip" data-placement="bottom" title="Ingrese únicamente números">
+                                <label class="font-weight-bold">Correo electrónico</label>
+                                <input class="form-control" id="senderEmailText" placeholder="Ej: radicacion@alphamail.com" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <p class="font-weight-bold">Destinatario</p>
+                    <div class="row form-group col-md-12" id="addresseeSelectGroup">
+                        <div class="form-group col-md-12" data-toggle="tooltip" data-placement="bottom" title="Seleccione el destinatario">
+                            <label class="font-weight-bold col-6">Seleccione el destinatario</label>
+                            <select style="width: 300px;" id="addresseeSelect" class="col-6" onchange="selectValueEvent('addressee');">
+                                <option value="">Selección...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" id="addresseeData">
+                        <div class="row form-group col-md-12">
+                            <div class="form-group col-md-6" data-toggle="tooltip" data-placement="bottom" title="Ingrese únicamente letras">
+                                <label class="font-weight-bold">Nombre</label>
+                                <input id="addresseeNameText" class="form-control" placeholder="Ej: Manuel" onkeypress="return onlyText(event);" readonly>
+                            </div>
+                            <div class="form-group col-md-6" data-toggle="tooltip" data-placement="bottom" title="Ingrese únicamente letras">
+                                <label class="font-weight-bold">Apellido</label>
+                                <input id="addresseeLastNameText" class="form-control" placeholder="Ej: Alvarez" onkeypress="return onlyText(event);" readonly>
+                            </div>
+                        </div>
+                        <div class="row form-group col-md-12">
+                            <div class="form-group col-md-3" data-toggle="tooltip" data-placement="bottom" title="Ingrese únicamente números">
+                                <label class="font-weight-bold">Número de identificación</label>
+                                <input class="form-control" id="addresseeNumberIdText" placeholder="Ej: 102030405" onkeypress="return onlyNumber(event);" readonly>
+                            </div>
+                            <div class="form-group col-md-3" data-toggle="tooltip" data-placement="bottom" title="Ingrese únicamente números">
+                                <label class="font-weight-bold">Número de teléfono</label>
+                                <input class="form-control" id="addresseePhoneText" placeholder="Ej: 3109999999" onkeypress="return onlyNumber(event);" readonly>
+                            </div>
+                            <div class="form-group col-md-6" data-toggle="tooltip" data-placement="bottom" title="Ingrese únicamente números">
+                                <label class="font-weight-bold">Correo electrónico</label>
+                                <input class="form-control" id="addresseeEmailText" placeholder="Ej: radicacion@alphamail.com" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <p class="font-weight-bold">Documento</p>
+                    <div class="row form-group col-md-12" id="file-group">
+                        <label id="PDFdocumentName" class="font-weight-bold col-3" for="archivoSolicitud">Comunicado digitalizado</label>
+                        <input id="uploadedFile" onchange="fileExtValidacion(event)" title="Radicado" type="file" name="archivo" class="inputfile form-control-file col-6" accept=".pdf" size="5" />
+                    </div>
+                    <div id="pdf-container" style="height: 0px;">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="saverButton" onclick="submitData();">Guardar</button>
+                <button type="button" class="btn btn-danger" onclick="clearFilingModal();" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="mensajeModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Mensaje</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="MessageModal" class="modal-body">
+                <p></p>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div data-keyboard="false" @*data-backdrop="static"*@ class="modal" id="confirmDeleteModal" @*aria-modal="true"*@>
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <h2 class="font-weight-bold h3 text-center mt-3">Radicado encontrado</h2>
+                <div class="row justify-content-md-center pt-3">
+                    <div class="col-10 form-group text-center">
+                        <label for="menssageDeleteModal"><strong>¿Desea eliminarlo?</strong></label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 text-center">
+                        <a class="btn btn-danger" data-dismiss="modal">CANCELAR</a>
+                    </div>
+                    <div class="col-6 text-center">
+                        <button class="btn btn-primary" onclick="deleteFiligConfirmed()">ACEPTAR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+    function ShowFilingModal() {
+        getDateToday('dateFiling');
+        $('#filing-display').modal('show');
+    }
+
+    function ShowMessage(text) {
+        $("#MessageModal").html(text);
+        $('#mensajeModal').modal('show');
+    }
+
+    function onlyNumber(e) {
+        codigo = (document.all) ? e.keyCode : e.which;
+        if (codigo == 8) return true; //backspace key
+        patron = /\d/;
+        te = String.fromCharCode(codigo);
+        return patron.test(te);
+    }
+
+    function onlyText(e) {
+        codigo = (document.all) ? e.keyCode : e.which;
+        if (codigo == 8) return true; //backspace key
+        patron = /[ a-zA-ZÀ-ÿñÑ\s]/;
+        te = String.fromCharCode(codigo);
+        return patron.test(te);
+    }
+
+    function validateConsecutive(idInput) {
+        debugger
+        var consecutive = document.getElementById(idInput).value;
+        var pattern = /[a-zA-Z]+[\d]/;
+        if (pattern.test(consecutive)) {
+            if (idInput == 'getConsecutive') {
+                getCompleteFiling(consecutive);
+            }
+            else if (idInput == 'upConsecutive') {
+                ShowMessage("Disculpe. Esta funcionalidad aún no está terminada.");
+            }
+            else if (idInput == 'delConsecutive') {
+                getFilingToDelete(consecutive);
+            }
+            else {
+                configModalFiling(idInput);
+            }
+        }
+        else {
+            ShowMessage("Formato incorrecto para el consecutivo. Ingrese uno con formato valido ('XX########', Ej. CE00000000)");
+        }
+    }
+
+    function configModalFiling(idInput) {
+        if (idInput == undefined || idInput == '') {
+            getDateToday('dateFiling');
+        }
+        ShowFilingModal();
+    }
+
+    function initConfigModalFiling() {
+        $.ajaxSetup({
+            async: false
+        });
+
+        getAllCommTypes();
+        getAllUsers();
+
+        $.ajaxSetup({
+            async: true
+        });
+    }
+
+    function getDateToday(idInput) {
+        var today = new Date();
+        var date = today.getFullYear().toString() + '-' + (100 + (today.getMonth() + 1)).toString().substr(1,2) + '-' + (100 + today.getDate()).toString().substr(1,2);
+        document.getElementById(idInput).value = date;
+    }
+
+    function getAllCommTypes() {
+        $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetAllCommTypes", "Client")',
+                success: function (response) {
+                    for(var i in response)
+                    {
+                        document.getElementById("commTypeSelect").innerHTML += "<option value='" + response[i].id + "'>" + response[i].typeName + "</option>";
+                    }
+                },
+                error: function (response) {
+                    if (response.responseText != "") {
+                        console.log("Algo salió mal: ");
+                        console.log(response.responseText);
+                    }
+                }
+             });
+    }
+
+    function getAllUsers() {
+        $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetAllUsers", "Client")',
+                success: function (response) {
+                    for(var i in response)
+                    {
+                        document.getElementById("senderSelect").innerHTML += "<option value='" + response[i].id + "'>" + response[i].firstName + " " + response[i].lastName + "</option>";
+                        document.getElementById("addresseeSelect").innerHTML += "<option value='" + response[i].id + "'>" + response[i].firstName + " " + response[i].lastName + "</option>";
+                    }
+                },
+                error: function (response) {
+                    if (response.responseText != "") {
+                        console.log("Algo salió mal: ");
+                        console.log(response.responseText);
+                    }
+                }
+        });
+    }
+
+    function selectValueEvent(itemGroupName) {
+        var idSelected = document.getElementById(itemGroupName + "Select").value;
+        getUserById(idSelected, itemGroupName);
+    }
+
+    function getUserById(idUser, itemGroup) {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetUserById", "Client")',
+            data: { id: idUser },
+            success: function (response) {
+                document.getElementById(itemGroup + "NameText").value = response.firstName;
+                document.getElementById(itemGroup + "LastNameText").value = response.lastName;
+                document.getElementById(itemGroup + "NumberIdText").value = response.numberID;
+                document.getElementById(itemGroup + "PhoneText").value = response.phonenumber;
+                document.getElementById(itemGroup + "EmailText").value = response.email;
+            },
+            error: function (response) {
+                if (response.responseText != "") {
+                    console.log("Algo salió mal: ");
+                    console.log(response.responseText);
+                }
+            }
+        });
+    }
+
+    function getFilingById(idFiling) {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetFilingById", "Client")',
+            data: { id: idFiling },
+            success: function (response) {
+                ShowMessage("Se creó exitosamente la radicación con consecutivo: " + response.consecutive);
+            },
+            error: function (response) {
+                if (response.responseText != "") {
+                    console.log("Algo salió mal: ");
+                    console.log(response.responseText);
+                }
+            }
+        });
+    }
+
+    function clearFilingModal() {
+        document.getElementById("commTypeSelect").value = '';
+        document.getElementById("commTypeSelect").style.display = "block";
+        document.getElementById("consecutiveText").value = '';
+        document.getElementById("dateFiling").value = '';
+        $('#commTypeSelect').attr('disabled', false);
+
+        document.getElementById("senderSelect").value = '';
+        document.getElementById("senderSelectGroup").style.display = "block";
+        document.getElementById("senderNameText").value = '';
+        document.getElementById("senderLastNameText").value = '';
+        document.getElementById("senderNumberIdText").value = '';
+        document.getElementById("senderPhoneText").value = '';
+        document.getElementById("senderEmailText").value = '';
+
+        document.getElementById("addresseeSelect").value = '';
+        document.getElementById("addresseeSelectGroup").style.display = "block";
+        document.getElementById("addresseeNameText").value = '';
+        document.getElementById("addresseeLastNameText").value = '';
+        document.getElementById("addresseeNumberIdText").value = '';
+        document.getElementById("addresseePhoneText").value = '';
+        document.getElementById("addresseeEmailText").value = '';
+
+        document.getElementById("b64File").value = '';
+        document.getElementById("uploadedFile").value = ''
+        $("#pdf-container").append('');
+        var x = document.getElementById("file-group");
+        x.style.display = "block";
+        document.getElementById("pdf-container").style.height = "0px";
+        var bs = document.getElementById("saverButton");
+        bs.style.display = "block";
+
+        document.getElementById("consecutiveToDelete").value = '';
+        document.getElementById("idFilingToDelete").value = '';
+    }
+
+    function fileExtValidacion(event) {
+        // convert file to b64
+        var srcFile = event.srcElement.files[0];
+        var readerb64 = new FileReader();
+        readerb64.readAsBinaryString(srcFile);
+        readerb64.onload = function () {
+            var b64Document = btoa(readerb64.result);
+            document.getElementById("b64File").value = b64Document;
+        };
+    }
+
+    function submitData() {
+        var commType = document.getElementById("commTypeSelect").value;
+        if (commType == undefined || commType == "" || commType == null) {
+            ShowMessage("Error. Tipo de comunicación no seleccionado, vuelva a intentar.");
+            return true;
+        }
+        var sender = document.getElementById("senderSelect").value;
+        if (sender == undefined || sender == "" || sender == null) {
+            ShowMessage("Error. Remitente no seleccionado, vuelva a intentar.");
+            return true;
+        }
+        var addressee = document.getElementById("addresseeSelect").value;
+        if (addressee == undefined || addressee == "" || addressee == null) {
+            ShowMessage("Error. Destinatario no seleccionado, vuelva a intentar.");
+            return true;
+        }
+        var b64File = document.getElementById("b64File").value;
+        if (b64File == undefined || b64File == "" || b64File == null) {
+            ShowMessage("Error. Documento no cargado, vuelva a intentar.");
+            return true;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CreateFiling", "Client")',
+            data: {
+                id: 0,
+                consecutive: "",
+                storageAddress: "",
+                base64File: b64File,
+                senderUserId: sender,
+                addresseeUserId: addressee,
+                correspondenceTypeId: commType,
+                auditId: 0,
+                isValid: true,
+                senderUser: null,
+                addresseeUser: null,
+                correspondenceType: null,
+                audit: null
+            },
+            success: function (response) {
+                if (response != undefined && response != null && response > 0) {
+                    $.ajaxSetup({
+                        async: false
+                    });
+
+                    $('#filing-display').modal('hide');
+                    clearFilingModal();
+                    getFilingById(response);
+
+                    $.ajaxSetup({
+                        async: true
+                    });
+                }
+                else
+                {
+                    console.log("Algo salió mal: ");
+                    console.log("Los datos obtenidos en respuesta al servicio no son lo esperado.");
+                }
+            },
+            error: function (response) {
+                if (response.responseText != "") {
+                    console.log("Algo salió mal: ");
+                    console.log(response.responseText);
+                }
+            }
+        });
+    }
+
+    function configDateToInput(date, idInput) {
+        var oldDate = new Date(date);
+        var date = oldDate.getFullYear().toString() + '-' + (100 + (oldDate.getMonth() + 1)).toString().substr(1,2) + '-' + (100 + oldDate.getDate()).toString().substr(1,2);
+        document.getElementById(idInput).value = date;
+    }
+
+    function loadDataFilingModal(filingData) {
+        document.getElementById("commTypeSelect").value = filingData.correspondenceTypeId;
+        document.getElementById("commTypeSelect").style.display = "none";
+        document.getElementById("consecutiveText").value = filingData.consecutive;
+        configDateToInput(filingData.audit.creationDate, 'dateFiling')
+        document.getElementById("commTypeSelect").style.display = "block";
+        $('#commTypeSelect').attr('disabled', true);
+
+        document.getElementById("senderSelect").value = filingData.senderUserId;
+        document.getElementById("senderSelectGroup").style.display = "none";
+        document.getElementById("senderNameText").value = filingData.senderUser.firstName;
+        document.getElementById("senderLastNameText").value = filingData.senderUser.lastName;
+        document.getElementById("senderNumberIdText").value = filingData.senderUser.numberID;
+        document.getElementById("senderPhoneText").value = filingData.senderUser.phonenumber;
+        document.getElementById("senderEmailText").value = filingData.senderUser.email;
+
+        document.getElementById("addresseeSelect").value = filingData.addresseeUserId;
+        document.getElementById("addresseeSelectGroup").style.display = "none";
+        document.getElementById("addresseeNameText").value = filingData.addresseeUser.firstName;
+        document.getElementById("addresseeLastNameText").value = filingData.addresseeUser.lastName;
+        document.getElementById("addresseeNumberIdText").value = filingData.addresseeUser.numberID;
+        document.getElementById("addresseePhoneText").value = filingData.addresseeUser.phonenumber;
+        document.getElementById("addresseeEmailText").value = filingData.addresseeUser.email;
+
+        document.getElementById("b64File").value = filingData.base64File;
+        document.getElementById("uploadedFile").value = '';
+        loadPDFViewer(filingData.base64File);
+        var bs = document.getElementById("saverButton");
+        bs.style.display = "none";
+    }
+
+    function loadPDFViewer(b64File) {
+        let content = '<iframe width="100%" height="100%" src="data:application/pdf;base64,' + b64File + '"></iframe>';
+        document.getElementById("pdf-container").style.height = "600px";
+        $("#pdf-container").append('');
+        $("#pdf-container").html(content);
+
+        var x = document.getElementById("file-group");
+        x.style.display = "none";
+    }
+
+    function getCompleteFiling(consecutive) {
+        debugger
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetFilingByConsecutive", "Client")',
+            data: {
+                consecutive: consecutive
+            },
+            success: function (response) {
+                if (response != undefined && response != null && response.id != undefined && response.id > 0) {
+                    $.ajaxSetup({
+                        async: false
+                    });
+
+                    loadDataFilingModal(response);
+                    $('#filing-display').modal('show');
+
+                    $.ajaxSetup({
+                        async: true
+                    });
+                }
+                else
+                {
+                    ShowMessage("No se encontraron datos registrados con el consecutivo: " + consecutive);
+
+                    console.log("Algo salió mal: ");
+                    console.log("Los datos obtenidos en respuesta al servicio no son lo esperado.");
+                }
+            },
+            error: function (response) {
+                if (response.responseText != "") {
+                    console.log("Algo salió mal: ");
+                    console.log(response.responseText);
+                }
+            }
+        });
+    }
+
+    function deleteFiligConfirmed() {
+        debugger
+        var consecutive = document.getElementById("consecutiveToDelete").value;
+        var idFiling = document.getElementById("idFilingToDelete").value;
+
+        $('#confirmDeleteModal').modal('hide');
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("DeleteFilingById", "Client")',
+            data: {
+                id: idFiling
+            },
+            success: function (response) {
+                debugger
+                if (response != undefined && response != null && response) {
+                    ShowMessage("Se eliminó exitosamente la comunicación radicada con consecutivo: " + consecutive);
+                }
+                else
+                {
+                    ShowMessage("Error. No fue posible eliminar el registro con consecutivo: " + consecutive);
+
+                    console.log("Algo salió mal: ");
+                    console.log("Los datos obtenidos en respuesta al servicio no son lo esperado.");
+                }
+            },
+            error: function (response) {
+                if (response.responseText != "") {
+                    console.log("Algo salió mal: ");
+                    console.log(response.responseText);
+                }
+            }
+        });
+
+    }
+
+    function getFilingToDelete(consecutive) {
+        debugger
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetFilingByConsecutive", "Client")',
+            data: {
+                consecutive: consecutive
+            },
+            success: function (response) {
+                debugger
+                if (response != undefined && response != null && response.id != undefined && response.id > 0) {
+                    $.ajaxSetup({
+                        async: false
+                    });
+
+                    document.getElementById("consecutiveToDelete").value = response.consecutive;
+                    document.getElementById("idFilingToDelete").value = response.id;
+                    
+                    $('#confirmDeleteModal').modal('show');
+
+                    $.ajaxSetup({
+                        async: true
+                    });
+                }
+                else
+                {
+                    ShowMessage("No se encontraron datos registrados con el consecutivo: " + consecutive);
+
+                    console.log("Algo salió mal: ");
+                    console.log("Los datos obtenidos en respuesta al servicio no son lo esperado.");
+                }
+            },
+            error: function (response) {
+                if (response.responseText != "") {
+                    console.log("Algo salió mal: ");
+                    console.log(response.responseText);
+                }
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        initConfigModalFiling();
+    });
+
+</script>
